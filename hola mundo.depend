@@ -2,3 +2,38 @@
 1742501654 source:c:\users\hhhhh\desktop\cpp\hola mundo\main.cpp
 	<iostream>
 
+1761157003 source:c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\main.cpp
+	<iostream>
+	<cstdlib>
+	"ArchivoAlumnos.h"
+
+1761157003 c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\archivoalumnos.h
+	"Alumno.h"
+
+1761157863 c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\alumno.h
+	"Persona.h"
+
+1761158072 c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\persona.h
+	"Fecha.h"
+
+1761010356 source:c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\fecha.cpp
+	"Fecha.h"
+
+1761010356 c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\fecha.h
+	<string>
+
+1761158072 source:c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\alumno.cpp
+	"Alumno.h"
+	<iostream>
+
+1761157003 source:c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\archivoalumnos.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	"ArchivoAlumnos.h"
+
+1761157863 source:c:\users\hhhhh\desktop\cpp\carpetas random\tpintegradorutnprog2\tpintegradorutnprog2\persona.cpp
+	"Persona.h"
+	<cstring>
+	<iostream>
+

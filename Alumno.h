@@ -5,15 +5,15 @@
 
 class Alumno : public Persona {
 private:
-    int legajo;
-    Fecha fechaInscripcion;
+    // No necesita legajo propio, lo hereda de Persona como _legajo
 
 public:
-    Alumno(int leg = 0, Fecha fI = Fecha());
+    // Constructor
+    Alumno(int l = 0, int d = 0, const char *nom = "S/N", const char *ape = "S/A",
+           int tel = 0, const char *dir = "S/D", const char *mail = "S/E",
+           bool est = true, Fecha fN = Fecha());
 
-    void setLegajo(int l);
-    int getLegajo();
-
+    // Métodos sobrescritos
     void Cargar() override;
     void Mostrar() override;
 };

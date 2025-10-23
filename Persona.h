@@ -1,39 +1,48 @@
 #ifndef PERSONA_H_INCLUDED
 #define PERSONA_H_INCLUDED
 
-#include <iostream>
-#include <cstring>
-#include "clsFecha.h"
-#include "clsDomicilio.h"
+#include "Fecha.h"
 
 class Persona {
 protected:
-    char nombre[30];
-    char apellido[30];
-    int dni;
-    Fecha fechaNacimiento;
-    Domicilio domicilio;
-    char email[40];
+    int _legajo;
+    int _dni;
+    char _nombre[50];
+    char _apellido[50];
+    int _telefono;
+    char _direccion[200];
+    Fecha _fechaNacimiento;
+    char _email[50];
+    bool _estado;
 
 public:
-    Persona(const char *nom = "S/N", const char *ape = "S/A", int d = 0,
-            Fecha fN = Fecha(), const char *mail = "S/E");
+    Persona(int l = 0, int d = 0, const char *nom = "S/N", const char *ape = "S/A",
+            int tel = 0, const char *dir = "S/D", const char *mail = "S/E",
+            bool est = true, Fecha fN = Fecha());
 
-    // SETTERS
-    void setNombre(const char *n);
-    void setApellido(const char *a);
-    void setDni(int d);
-    void setFechaNacimiento(Fecha f);
-    void setEmail(const char *mail);
+    /// GETTERS (IMPORTANTE: con const)
+    int getLegajo() const;
+    int getDni() const;
+    const char* getNombre() const;
+    const char* getApellido() const;
+    int getTelefono() const;
+    const char* getDireccion() const;
+    const char* getEmail() const;
+    bool getEstado() const;
+    Fecha getFechaNacimiento() const;
 
-    // GETTERS
-    const char* getNombre();
-    const char* getApellido();
-    int getDni();
-    Fecha getFechaNacimiento();
-    const char* getEmail();
+    /// SETTERS
+    void setLegajo(int valor);
+    void setDni(int valor);
+    void setNombre(const char* valor);
+    void setApellido(const char* valor);
+    void setTelefono(int valor);
+    void setDireccion(const char* valor);
+    void setFechaNacimiento(Fecha fecha);
+    void setEmail(const char* valor);
+    void setEstado(bool valor);
 
-    // Métodos
+    /// MÉTODOS
     virtual void Cargar();
     virtual void Mostrar();
 };
