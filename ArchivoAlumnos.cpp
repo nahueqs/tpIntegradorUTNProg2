@@ -52,6 +52,15 @@ bool ArchivoAlumnos::grabarRegistro(Alumno obj) {
     return escribio;
 }
 
+bool ArchivoAlumnos::modificarRegistro(Alumno obj, int pos) {
+    FILE *p = fopen(nombre, "rb+");
+    if (p == nullptr) return false;
+    fseek(p, pos * sizeof(Alumno), SEEK_SET);
+    bool escribio = fwrite(&obj, sizeof(Alumno), 1, p);
+    fclose(p);
+    return escribio;
+}
+
 void ArchivoAlumnos::listar() {
     FILE *p = fopen(nombre, "rb");
     if (p == nullptr) {

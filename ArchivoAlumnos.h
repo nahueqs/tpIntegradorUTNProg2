@@ -13,6 +13,7 @@ public:
     int buscarPorLegajo(int legajo);
     Alumno leerRegistro(int pos);
     bool grabarRegistro(Alumno obj);
+    bool modificarRegistro(Alumno obj, int pos);
     void listar();
 };
 

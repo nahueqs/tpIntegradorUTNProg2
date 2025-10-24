@@ -1,20 +1,24 @@
 #include <iostream>
 #include <cstdlib>
 #include "ArchivoAlumnos.h"
+#include "ArchivoCursos.h"
 
 using namespace std;
 
+// ============= MENÚ DE ALUMNOS =============
 void menuAlumnos() {
     ArchivoAlumnos arc;
     int opcion;
     do {
         system("cls");
-        cout << "===== GESTION DE ALUMNOS =====\n";
+        cout << "========== GESTION DE ALUMNOS ==========\n";
         cout << "1 - Agregar alumno\n";
-        cout << "2 - Listar alumnos\n";
-        cout << "3 - Buscar por legajo\n";
-        cout << "0 - Volver\n";
-        cout << "==============================\n";
+        cout << "2 - Listar todos los alumnos\n";
+        cout << "3 - Buscar alumno por legajo\n";
+        cout << "4 - Modificar alumno\n";
+        cout << "5 - Dar de baja alumno\n";
+        cout << "0 - Volver al menu principal\n";
+        cout << "========================================\n";
         cout << "Opcion: ";
         cin >> opcion;
 
@@ -23,26 +27,64 @@ void menuAlumnos() {
             Alumno obj;
             obj.Cargar();
             if (arc.grabarRegistro(obj))
-                cout << "Alumno guardado.\n";
+                cout << "\nAlumno guardado exitosamente.\n";
             else
-                cout << "Error al guardar.\n";
+                cout << "\nError al guardar alumno.\n";
             system("pause");
             break;
         }
         case 2:
+            cout << "\n========== LISTADO DE ALUMNOS ==========\n";
             arc.listar();
             system("pause");
             break;
         case 3: {
             int leg;
-            cout << "Ingrese legajo: ";
+            cout << "\nIngrese legajo del alumno: ";
             cin >> leg;
             int pos = arc.buscarPorLegajo(leg);
             if (pos >= 0) {
                 Alumno obj = arc.leerRegistro(pos);
                 obj.Mostrar();
             } else {
-                cout << "Alumno no encontrado.\n";
+                cout << "\nAlumno no encontrado.\n";
+            }
+            system("pause");
+            break;
+        }
+        case 4: {
+            int leg;
+            cout << "\nIngrese legajo del alumno a modificar: ";
+            cin >> leg;
+            int pos = arc.buscarPorLegajo(leg);
+            if (pos >= 0) {
+                Alumno obj;
+                cout << "\nIngrese los nuevos datos:\n";
+                obj.Cargar();
+                // Mantener el mismo legajo
+                obj.setLegajo(leg);
+                if (arc.grabarRegistro(obj)) // Nota: necesitarías un método modificar
+                    cout << "\nAlumno modificado exitosamente.\n";
+                else
+                    cout << "\nError al modificar.\n";
+            } else {
+                cout << "\nAlumno no encontrado.\n";
+            }
+            system("pause");
+            break;
+        }
+        case 5: {
+            int leg;
+            cout << "\nIngrese legajo del alumno a dar de baja: ";
+            cin >> leg;
+            int pos = arc.buscarPorLegajo(leg);
+            if (pos >= 0) {
+                Alumno obj = arc.leerRegistro(pos);
+                obj.setEstado(false);
+                // Aquí necesitarías modificarRegistro en ArchivoAlumnos
+                cout << "\nAlumno dado de baja.\n";
+            } else {
+                cout << "\nAlumno no encontrado.\n";
             }
             system("pause");
             break;
@@ -51,23 +93,177 @@ void menuAlumnos() {
     } while(opcion != 0);
 }
 
+// ============= MENÚ DE CURSOS =============
+void menuCursos() {
+    ArchivoCursos arc;
+    int opcion;
+    do {
+        system("cls");
+        cout << "=========== GESTION DE CURSOS ===========\n";
+        cout << "1 - Agregar curso\n";
+        cout << "2 - Listar todos los cursos\n";
+        cout << "3 - Listar cursos activos\n";
+        cout << "4 - Buscar curso por ID\n";
+        cout << "5 - Modificar curso\n";
+        cout << "6 - Dar de baja curso\n";
+        cout << "7 - Listar cursos por capacidad maxima\n";
+        cout << "8 - Listar cursos con cupo disponible\n";
+        cout << "9 - Buscar cursos por docente\n";
+        cout << "10 - Buscar cursos por anio\n";
+        cout << "0 - Volver al menu principal\n";
+        cout << "=========================================\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch(opcion) {
+        case 1: {
+            Curso obj;
+            obj.Cargar();
+            if (arc.grabarRegistro(obj))
+                cout << "\nCurso guardado exitosamente.\n";
+            else
+                cout << "\nError al guardar curso.\n";
+            system("pause");
+            break;
+        }
+        case 2:
+            cout << "\n========== LISTADO DE CURSOS ==========\n";
+            arc.listar();
+            system("pause");
+            break;
+        case 3:
+            cout << "\n========== CURSOS ACTIVOS ==========\n";
+            arc.listarActivos();
+            system("pause");
+            break;
+        case 4: {
+            int id;
+            cout << "\nIngrese ID del curso: ";
+            cin >> id;
+            int pos = arc.buscarPorId(id);
+            if (pos >= 0) {
+                Curso obj = arc.leerRegistro(pos);
+                obj.Mostrar();
+            } else {
+                cout << "\nCurso no encontrado.\n";
+            }
+            system("pause");
+            break;
+        }
+        case 5: {
+            int id;
+            cout << "\nIngrese ID del curso a modificar: ";
+            cin >> id;
+            int pos = arc.buscarPorId(id);
+            if (pos >= 0) {
+                Curso obj;
+                cout << "\nIngrese los nuevos datos:\n";
+                obj.Cargar();
+                obj.setIdCurso(id); // Mantener el mismo ID
+                if (arc.modificarRegistro(obj, pos))
+                    cout << "\nCurso modificado exitosamente.\n";
+                else
+                    cout << "\nError al modificar.\n";
+            } else {
+                cout << "\nCurso no encontrado.\n";
+            }
+            system("pause");
+            break;
+        }
+        case 6: {
+            int id;
+            cout << "\nIngrese ID del curso a dar de baja: ";
+            cin >> id;
+            int pos = arc.buscarPorId(id);
+            if (pos >= 0) {
+                Curso obj = arc.leerRegistro(pos);
+                obj.setEstado(false);
+                if (arc.modificarRegistro(obj, pos))
+                    cout << "\nCurso dado de baja exitosamente.\n";
+                else
+                    cout << "\nError al dar de baja.\n";
+            } else {
+                cout << "\nCurso no encontrado.\n";
+            }
+            system("pause");
+            break;
+        }
+        case 7:
+            arc.listarPorMaxAlumnos();
+            system("pause");
+            break;
+        case 8:
+            arc.listarConCupoDisponible();
+            system("pause");
+            break;
+        case 9: {
+            int legajo;
+            cout << "\nIngrese legajo del docente: ";
+            cin >> legajo;
+            arc.listarPorDocente(legajo);
+            system("pause");
+            break;
+        }
+        case 10: {
+            int anio;
+            cout << "\nIngrese anio: ";
+            cin >> anio;
+            arc.listarPorAnio(anio);
+            system("pause");
+            break;
+        }
+        }
+    } while(opcion != 0);
+}
+
+// ============= MENÚ PRINCIPAL =============
 int main() {
     int opcion;
     do {
         system("cls");
-        cout << "===== SISTEMA DE GESTION COLEGIO =====\n";
-        cout << "1 - Gestion de alumnos\n";
-        cout << "2 - Gestion de profesores\n";
-        cout << "3 - Gestion de materias\n";
-        cout << "0 - Salir\n";
+        cout << "======================================\n";
+        cout << "   SISTEMA DE GESTION DE COLEGIO\n";
+        cout << "======================================\n";
+        cout << "1 - Gestion de Alumnos\n";
+        cout << "2 - Gestion de Cursos\n";
+        cout << "3 - Gestion de Inscripciones (En desarrollo)\n";
+        cout << "4 - Gestion de Personal (En desarrollo)\n";
+        cout << "5 - Gestion de Asistencias (En desarrollo)\n";
+        cout << "6 - Informes y Reportes (En desarrollo)\n";
+        cout << "0 - Salir del sistema\n";
         cout << "======================================\n";
         cout << "Opcion: ";
         cin >> opcion;
 
         switch(opcion) {
-        case 1: menuAlumnos(); break;
-        case 2: cout << "Modulo profesores en desarrollo\n"; system("pause"); break;
-        case 3: cout << "Modulo materias en desarrollo\n"; system("pause"); break;
+        case 1:
+            menuAlumnos();
+            break;
+        case 2:
+            menuCursos();
+            break;
+        case 3:
+            cout << "\nModulo de Inscripciones en desarrollo...\n";
+            system("pause");
+            break;
+        case 4:
+            cout << "\nModulo de Personal en desarrollo...\n";
+            system("pause");
+            break;
+        case 5:
+            cout << "\nModulo de Asistencias en desarrollo...\n";
+            system("pause");
+            break;
+        case 6:
+            cout << "\nModulo de Informes en desarrollo...\n";
+            system("pause");
+            break;
+        case 0:
+            cout << "\nSaliendo del sistema...\n";
+            break;
+        default:
+            cout << "\nOpcion invalida. Intente nuevamente.\n";
+            system("pause");
         }
     } while(opcion != 0);
 

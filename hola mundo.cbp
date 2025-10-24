@@ -36,6 +36,10 @@
 		<Unit filename="Alumno.h" />
 		<Unit filename="ArchivoAlumnos.cpp" />
 		<Unit filename="ArchivoAlumnos.h" />
+		<Unit filename="ArchivoCursos.cpp" />
+		<Unit filename="ArchivoCursos.h" />
+		<Unit filename="Curso.cpp" />
+		<Unit filename="Curso.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
 		<Unit filename="Materia.h" />
