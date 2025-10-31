@@ -8,6 +8,7 @@ using namespace std;
 // ============= MENÚ DE ALUMNOS =============
 void menuAlumnos() {
     ArchivoAlumnos arc;
+    cout << "test" << endl;
     int opcion;
     do {
         system("cls");
@@ -219,6 +220,7 @@ void menuCursos() {
 // ============= MENÚ PRINCIPAL =============
 int main() {
     int opcion;
+    cout << "test" << endl;
     do {
         system("cls");
         cout << "======================================\n";
