@@ -1,0 +1,14 @@
+# Ignorar carpetas de build (compilación)
+obj/
+bin/
+
+# Ignorar archivos compilados
+*.exe
+*.o
+
+# Ignorar archivos del IDE Code::Blocks
+*.depend
+*.layout
+
+# Ignorar archivos de configuración de usuario (opcional pero recomendado)
+*.cbp.user
