@@ -14,9 +14,13 @@ void menuAlumnos() {
         cout << "========== GESTION DE ALUMNOS ==========\n";
         cout << "1 - Agregar alumno\n";
         cout << "2 - Listar todos los alumnos\n";
-        cout << "3 - Buscar alumno por legajo\n";
-        cout << "4 - Modificar alumno\n";
-        cout << "5 - Dar de baja alumno\n";
+        cout << "3 - Buscar alumno por LEGAJO\n";
+        cout << "4 - Buscar alumno por DNI\n";
+        cout << "5 - Modificar alumno\n";
+        cout << "6 - Dar de baja alumno\n";
+        cout << "7 - Listar por apellido\n";
+        cout << "8 - Listar por DNI\n";
+        cout << "9 - Listar solo activos\n";
         cout << "0 - Volver al menu principal\n";
         cout << "========================================\n";
         cout << "Opcion: ";
@@ -26,10 +30,21 @@ void menuAlumnos() {
         case 1: {
             Alumno obj;
             obj.Cargar();
-            if (arc.grabarRegistro(obj))
-                cout << "\nAlumno guardado exitosamente.\n";
-            else
-                cout << "\nError al guardar alumno.\n";
+
+            // VALIDAR QUE EL LEGAJO Y DNI SEAN ÚNICOS
+            bool legajoValido = arc.validarLegajoUnico(obj.getLegajo());
+            bool dniValido = arc.validarDniUnico(obj.getDni());
+
+            if (legajoValido && dniValido) {
+                if (arc.grabarRegistro(obj)) {
+                    cout << "\n*** ALUMNO GUARDADO EXITOSAMENTE ***\n";
+                } else {
+                    cout << "\n*** ERROR AL GUARDAR ALUMNO ***\n";
+                }
+            } else {
+                cout << "\n*** NO SE PUDO GUARDAR EL ALUMNO ***\n";
+                cout << "El legajo o DNI ya existen en el sistema.\n";
+            }
             system("pause");
             break;
         }
@@ -47,12 +62,26 @@ void menuAlumnos() {
                 Alumno obj = arc.leerRegistro(pos);
                 obj.Mostrar();
             } else {
-                cout << "\nAlumno no encontrado.\n";
+                cout << "\n*** ALUMNO NO ENCONTRADO ***\n";
             }
             system("pause");
             break;
         }
         case 4: {
+            int dni;
+            cout << "\nIngrese DNI del alumno: ";
+            cin >> dni;
+            int pos = arc.buscarPorDni(dni);
+            if (pos >= 0) {
+                Alumno obj = arc.leerRegistro(pos);
+                obj.Mostrar();
+            } else {
+                cout << "\n*** ALUMNO NO ENCONTRADO ***\n";
+            }
+            system("pause");
+            break;
+        }
+        case 5: {
             int leg;
             cout << "\nIngrese legajo del alumno a modificar: ";
             cin >> leg;
@@ -73,7 +102,7 @@ void menuAlumnos() {
             system("pause");
             break;
         }
-        case 5: {
+        case 6: {
             int leg;
             cout << "\nIngrese legajo del alumno a dar de baja: ";
             cin >> leg;
@@ -81,14 +110,29 @@ void menuAlumnos() {
             if (pos >= 0) {
                 Alumno obj = arc.leerRegistro(pos);
                 obj.setEstado(false);
-                // Aquí necesitarías modificarRegistro en ArchivoAlumnos
-                cout << "\nAlumno dado de baja.\n";
+                if (arc.modificarRegistro(obj, pos)) {
+                    cout << "\n*** ALUMNO DADO DE BAJA EXITOSAMENTE ***\n";
+                } else {
+                    cout << "\n*** ERROR AL DAR DE BAJA ***\n";
+                }
             } else {
-                cout << "\nAlumno no encontrado.\n";
+                cout << "\n*** ALUMNO NO ENCONTRADO ***\n";
             }
             system("pause");
             break;
         }
+        case 7:
+            arc.listarPorApellido();
+            system("pause");
+            break;
+        case 8:
+            arc.listarPorDni();
+            system("pause");
+            break;
+        case 9:
+            arc.listarActivos();
+            system("pause");
+            break;
         }
     } while(opcion != 0);
 }
@@ -206,7 +250,7 @@ void menuCursos() {
         }
         case 10: {
             int anio;
-            cout << "\nIngrese anio: ";
+            cout << "\nIngrese año: ";
             cin >> anio;
             arc.listarPorAnio(anio);
             system("pause");
