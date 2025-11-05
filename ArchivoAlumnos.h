@@ -10,17 +10,17 @@ private:
 public:
     ArchivoAlumnos(const char *n = "Alumnos.dat");
 
-    // M…TODOS B¡SICOS
+    // M√âTODOS B√ÅSICOS
     int contarRegistros();
     Alumno leerRegistro(int pos);
     bool grabarRegistro(Alumno obj);
     bool modificarRegistro(Alumno obj, int pos);
 
-    // B⁄SQUEDAS
+    // B√öSQUEDAS
     int buscarPorLegajo(int legajo);
     int buscarPorDni(int dni);
 
-    // VALIDACIONES - NUEVAS
+    // VALIDACIONES
     bool existeLegajo(int legajo);
     bool existeDni(int dni);
     bool validarLegajoUnico(int legajo);
@@ -31,6 +31,7 @@ public:
     void listarActivos();
     void listarPorApellido();
     void listarPorDni();
+    void listarSinOrdenar(); // ‚Üê AGREGAR ESTA L√çNEA
 };
 
-#endif // ARCHIVOALUMNOS_H_INCLUDED
+#endif

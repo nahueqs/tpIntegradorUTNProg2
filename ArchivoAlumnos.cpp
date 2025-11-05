@@ -157,32 +157,49 @@ void ArchivoAlumnos::listarPorApellido() {
         return;
     }
 
-    Alumno *alumnos = new Alumno[cant];
     FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "Error al abrir el archivo.\n";
+        return;
+    }
 
-    for (int i = 0; i < cant; i++) {
-        fread(&alumnos[i], sizeof(Alumno), 1, p);
+    // Crear array en el stack (más seguro para pocos registros)
+    // Si tienes muchos alumnos, ajusta el tamaño máximo
+    const int MAX_ALUMNOS = 1000;
+    Alumno alumnos[MAX_ALUMNOS];
+    int leidos = 0;
+
+    // Leer registros
+    while (leidos < MAX_ALUMNOS && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+        leidos++;
     }
     fclose(p);
 
-    // Ordenamiento burbuja por apellido
-    for (int i = 0; i < cant - 1; i++) {
-        for (int j = 0; j < cant - i - 1; j++) {
-            if (strcmp(alumnos[j].getApellido(), alumnos[j + 1].getApellido()) > 0) {
-                Alumno temp = alumnos[j];
-                alumnos[j] = alumnos[j + 1];
-                alumnos[j + 1] = temp;
+    if (leidos == 0) {
+        cout << "No se pudieron leer los registros.\n";
+        return;
+    }
+
+    // Ordenamiento por selección (más simple y seguro)
+    for (int i = 0; i < leidos - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < leidos; j++) {
+            if (strcmp(alumnos[j].getApellido(), alumnos[minIdx].getApellido()) < 0) {
+                minIdx = j;
             }
+        }
+        if (minIdx != i) {
+            Alumno temp = alumnos[i];
+            alumnos[i] = alumnos[minIdx];
+            alumnos[minIdx] = temp;
         }
     }
 
     cout << "\n========== ALUMNOS ORDENADOS POR APELLIDO ==========\n";
-    for (int i = 0; i < cant; i++) {
+    for (int i = 0; i < leidos; i++) {
         alumnos[i].Mostrar();
         cout << "--------------------------------\n";
     }
-
-    delete[] alumnos;
 }
 
 void ArchivoAlumnos::listarPorDni() {
@@ -192,30 +209,64 @@ void ArchivoAlumnos::listarPorDni() {
         return;
     }
 
-    Alumno *alumnos = new Alumno[cant];
     FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "Error al abrir el archivo.\n";
+        return;
+    }
 
-    for (int i = 0; i < cant; i++) {
-        fread(&alumnos[i], sizeof(Alumno), 1, p);
+    // Crear array en el stack
+    const int MAX_ALUMNOS = 1000;
+    Alumno alumnos[MAX_ALUMNOS];
+    int leidos = 0;
+
+    // Leer registros
+    while (leidos < MAX_ALUMNOS && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+        leidos++;
     }
     fclose(p);
 
-    // Ordenamiento burbuja por DNI
-    for (int i = 0; i < cant - 1; i++) {
-        for (int j = 0; j < cant - i - 1; j++) {
-            if (alumnos[j].getDni() > alumnos[j + 1].getDni()) {
-                Alumno temp = alumnos[j];
-                alumnos[j] = alumnos[j + 1];
-                alumnos[j + 1] = temp;
+    if (leidos == 0) {
+        cout << "No se pudieron leer los registros.\n";
+        return;
+    }
+
+    // Ordenamiento por selección
+    for (int i = 0; i < leidos - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < leidos; j++) {
+            if (alumnos[j].getDni() < alumnos[minIdx].getDni()) {
+                minIdx = j;
             }
+        }
+        if (minIdx != i) {
+            Alumno temp = alumnos[i];
+            alumnos[i] = alumnos[minIdx];
+            alumnos[minIdx] = temp;
         }
     }
 
     cout << "\n========== ALUMNOS ORDENADOS POR DNI ==========\n";
-    for (int i = 0; i < cant; i++) {
+    for (int i = 0; i < leidos; i++) {
         alumnos[i].Mostrar();
         cout << "--------------------------------\n";
     }
+}
 
-    delete[] alumnos;
+void ArchivoAlumnos::listarSinOrdenar() {
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "No hay registros de alumnos.\n";
+        return;
+    }
+    Alumno obj;
+    int contador = 0;
+    cout << "\n========== ALUMNOS (SIN ORDENAR) ==========\n";
+    while (fread(&obj, sizeof(Alumno), 1, p)) {
+        cout << "Registro #" << (++contador) << ":\n";
+        obj.Mostrar();
+        cout << "--------------------------------\n";
+    }
+    fclose(p);
+    cout << "Total de registros leidos: " << contador << endl;
 }
