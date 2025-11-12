@@ -14,11 +14,11 @@ private:
     bool _estado;
 
 public:
-    // --- Constructores (solo declarados) ---
+    /// constructores
     Inscripcion();
     Inscripcion(int legajo, int idInsc, int idCurso, int dia, int mes, int anio, int importe, bool paga, bool estado);
 
-    // --- Setters (solo declarados) ---
+    /// setters
     void setLegajoAlumno(int legajo);
     void setIdInscripcion(int id);
     void setIdCurso(int id);
@@ -27,7 +27,7 @@ public:
     void setMatriculaPaga(bool paga);
     void setEstado(bool estado);
 
-    // --- Getters (solo declarados) ---
+    /// getters
     int getLegajoAlumno() const;
     int getIdInscripcion() const;
     int getIdCurso() const;

@@ -2,36 +2,34 @@
 #include "Inscripcion.h"
 using namespace std;
 
- // --- Definición de Constructores ---
 
-// Constructor por defecto
 Inscripcion::Inscripcion() :
     _legajoAlumno(0),
     _idInscripcion(0),
     _idCurso(0),
-    _fechaInscripcion(), // Llama al constructor por defecto de Fecha
+    _fechaInscripcion(),
     _importeMatricula(0),
     _matriculaPaga(false),
     _estado(false)
 {
-    // El cuerpo queda vacío
+
 }
 
-// Constructor "para llenar"
+
 Inscripcion::Inscripcion(int legajo, int idInsc, int idCurso, int dia, int mes, int anio, int importe, bool paga, bool estado) :
     _legajoAlumno(legajo),
     _idInscripcion(idInsc),
     _idCurso(idCurso),
-    _fechaInscripcion(dia, mes, anio), // Llama al constructor Fecha(d,m,a)
+    _fechaInscripcion(dia, mes, anio),
     _importeMatricula(importe),
     _matriculaPaga(paga),
     _estado(estado)
 {
-    // El cuerpo queda vacío
+
 }
 
+/// seters
 
-// --- Definición de Setters ---
 
 void Inscripcion::setLegajoAlumno(int legajo) {
     _legajoAlumno = legajo;
@@ -62,7 +60,7 @@ void Inscripcion::setEstado(bool estado) {
 }
 
 
-// --- Definición de Getters ---
+/// getters
 
 int Inscripcion::getLegajoAlumno() const {
     return _legajoAlumno;

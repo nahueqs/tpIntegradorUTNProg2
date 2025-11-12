@@ -2,7 +2,7 @@
 #include <cstring>
 #include "Direccion.h"
 
-// --- Constructor Vacío ---
+/// constructores
 Direccion::Direccion()
     : _numero(0)
 {
@@ -13,7 +13,7 @@ Direccion::Direccion()
     strcpy(_codigoPostal, "S/CP");
 }
 
-// --- Constructor Parametrizado ---
+
 Direccion::Direccion(const char *calle, int num, const char *piso,
                      const char *depto, const char *loc, const char *cp)
     : _numero(num)
@@ -25,29 +25,62 @@ Direccion::Direccion(const char *calle, int num, const char *piso,
     strcpy(_codigoPostal, cp);
 }
 
-// --- Setters ---
-void Direccion::setCalle(const char *calle) { strcpy(_calle, calle); }
-void Direccion::setNumero(int num) { _numero = num; }
-void Direccion::setPiso(const char *piso) { strcpy(_piso, piso); }
-void Direccion::setDepto(const char *depto) { strcpy(_depto, depto); }
-void Direccion::setLocalidad(const char *loc) { strcpy(_localidad, loc); }
-void Direccion::setCodigoPostal(const char *cp) { strcpy(_codigoPostal, cp); }
+/// setters
+void Direccion::setCalle(const char *calle) {
+strcpy(_calle, calle);
+}
 
-// --- Getters ---
-const char* Direccion::getCalle() const { return _calle; }
-int Direccion::getNumero() const { return _numero; }
-const char* Direccion::getPiso() const { return _piso; }
-const char* Direccion::getDepto() const { return _depto; }
-const char* Direccion::getLocalidad() const { return _localidad; }
-const char* Direccion::getCodigoPostal() const { return _codigoPostal; }
+void Direccion::setNumero(int num) {
+     _numero = num;
+}
 
-// --- Métodos ---
+void Direccion::setPiso(const char *piso) {
+    strcpy(_piso, piso);
+}
+void Direccion::setDepto(const char *depto) {
+strcpy(_depto, depto);
+}
+
+void Direccion::setLocalidad(const char *loc) {
+     strcpy(_localidad, loc);
+}
+
+void Direccion::setCodigoPostal(const char *cp) {
+     strcpy(_codigoPostal, cp);
+}
+
+/// getters
+const char* Direccion::getCalle() const {
+    return _calle;
+}
+
+int Direccion::getNumero() const {
+    return _numero;
+}
+
+const char* Direccion::getPiso() const {
+    return _piso;
+}
+
+const char* Direccion::getDepto() const {
+    return _depto;
+}
+
+const char* Direccion::getLocalidad() const {
+    return _localidad;
+}
+
+const char* Direccion::getCodigoPostal() const {
+    return _codigoPostal;
+}
+
+ /// metodos
 void Direccion::Cargar() {
     std::cout << "Calle: ";
     std::cin.getline(_calle, 100);
     std::cout << "Numero: ";
     std::cin >> _numero;
-    std::cin.ignore(); // Limpia el buffer
+    std::cin.ignore();
     std::cout << "Piso (o PB): ";
     std::cin.getline(_piso, 10);
     std::cout << "Depto: ";
@@ -59,7 +92,7 @@ void Direccion::Cargar() {
 }
 
 void Direccion::Mostrar() {
-    // Se muestra con un formato más de "dirección"
+
     std::cout << _calle << " " << _numero;
     if (strcmp(_piso, "") != 0 && strcmp(_piso, "S/P") != 0) {
         std::cout << ", Piso " << _piso;

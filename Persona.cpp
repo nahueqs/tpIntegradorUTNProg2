@@ -11,8 +11,8 @@ using namespace std;
 Persona::Persona()
     : _dni(0),
       _telefono(0),
-      _direccion(),       // Llama al constructor vacío de Direccion
-      _fechaNacimiento(), // Llama al constructor vacío de Fecha
+      _direccion(),
+      _fechaNacimiento(),
       _estado(true)
 {
    /// ponemos los nombres como "vacios"
@@ -31,7 +31,7 @@ Persona::Persona(int d, const char *nom, const char *ape,
       _fechaNacimiento(fN),
       _estado(est)
 {
-    //aca usamos la funcion del strcpy para copiar los punteros al array del char
+    //aca usamos la funcion del strcpy para copiar los punteros al vector del char
     strcpy(_nombre, nom);
     strcpy(_apellido, ape);
     strcpy(_email, mail);
@@ -111,7 +111,7 @@ void Persona::Cargar() {
     cout << "Ingrese DNI: ";
     cin >> _dni;
     cout << "Ingrese Nombre: ";
-    cin.ignore(); // Limpia el buffer después de leer un int
+    cin.ignore();
     cin.getline(_nombre, 50);
     cout << "Ingrese Apellido: ";
     cin.getline(_apellido, 50);
@@ -120,15 +120,14 @@ void Persona::Cargar() {
     cin.ignore();
 
     cout << "--- Cargando Direccion ---" << endl;
-    _direccion.Cargar(); // DELEGAMOS la carga a la clase Direccion
+    _direccion.Cargar();
 
     cout << "Ingrese Email: ";
     cin.getline(_email, 50);
 
     cout << "--- Cargando Fecha de Nacimiento ---" << endl;
-    _fechaNacimiento.Cargar(); // DELEGAMOS la carga a la clase Fecha
+    _fechaNacimiento.Cargar();
 
-    // Limpiamos el buffer después del último cin >> de Fecha::Cargar()
     cin.ignore();
 
     _estado = true;
@@ -142,10 +141,10 @@ void Persona::Mostrar() {
     cout << "Email: " << _email << endl;
 
     cout << "--- Direccion ---" << endl;
-    _direccion.Mostrar(); // DELEGAMOS la muestra a la clase Direccion
+    _direccion.Mostrar();
 
     cout << "Fecha de Nacimiento: ";
-    _fechaNacimiento.Mostrar(); // DELEGAMOS la muestra a la clase Fecha
+    _fechaNacimiento.Mostrar();
 
     cout << "Estado: " << (_estado ? "Activo" : "Inactivo") << endl;
 }

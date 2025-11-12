@@ -21,7 +21,7 @@ int ArchivoAlumnos::contarRegistros() {
 Alumno ArchivoAlumnos::leerRegistro(int pos) {
     Alumno obj;
     FILE *p = fopen(nombre, "rb");
-    if (p == nullptr) return obj; // Devuelve obj vacío
+    if (p == nullptr) return obj;
     fseek(p, pos * sizeof(Alumno), SEEK_SET);
     fread(&obj, sizeof(Alumno), 1, p);
     fclose(p);
@@ -51,16 +51,16 @@ int ArchivoAlumnos::generarNuevoLegajo() {
 }
 
 
-// ========== BÚSQUEDAS (Corregido) ==========
+/// Busquedas
 
 int ArchivoAlumnos::buscarPorLegajo(int legajo) {
     FILE *p = fopen(nombre, "rb");
-    if (p == nullptr) return -1; // Error al abrir
+    if (p == nullptr) return -1;
     Alumno obj;
     int pos = 0;
     while (fread(&obj, sizeof(Alumno), 1, p)) {
 
-        // --- ¡LÍNEA CORREGIDA! ---
+
         if (obj.getLegajoAlumno() == legajo) {
             fclose(p);
             return pos;
@@ -68,7 +68,7 @@ int ArchivoAlumnos::buscarPorLegajo(int legajo) {
         pos++;
     }
     fclose(p);
-    return -2; // No encontrado
+    return -2;
 }
 
 int ArchivoAlumnos::buscarPorDni(int dni) {
@@ -84,10 +84,10 @@ int ArchivoAlumnos::buscarPorDni(int dni) {
         pos++;
     }
     fclose(p);
-    return -2; // No encontrado
+    return -2;
 }
 
-// ========== VALIDACIONES ==========
+/// validaciones
 
 bool ArchivoAlumnos::existeLegajo(int legajo) {
     return buscarPorLegajo(legajo) >= 0;
@@ -113,7 +113,7 @@ bool ArchivoAlumnos::validarDniUnico(int dni) {
     return true;
 }
 
-// ========== LISTADOS ==========
+
 
 void ArchivoAlumnos::listar() {
     int cant = contarRegistros();
@@ -148,7 +148,7 @@ void ArchivoAlumnos::listarActivos() {
     bool encontro = false;
     cout << "\n========== ALUMNOS ACTIVOS ==========\n";
     while (fread(&obj, sizeof(Alumno), 1, p)) {
-        if (obj.getEstado()) { // getEstado() es de Persona
+        if (obj.getEstado()) {
             obj.Mostrar();
             cout << "--------------------------------\n";
             encontro = true;
@@ -261,6 +261,5 @@ void ArchivoAlumnos::listarSinOrdenar() {
     listar();
 }
 
-// ========== MODIFICACIONES ==========
 
 
