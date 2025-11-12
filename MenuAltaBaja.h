@@ -1,0 +1,6 @@
+#ifndef MENUALTABAJA_H_INCLUDED
+#define MENUALTABAJA_H_INCLUDED
+
+void menuAltaBaja
+
+#endif // MENUALTABAJA_H_INCLUDED

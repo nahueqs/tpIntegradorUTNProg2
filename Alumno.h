@@ -1,20 +1,29 @@
 #ifndef ALUMNO_H_INCLUDED
 #define ALUMNO_H_INCLUDED
-
 #include "Persona.h"
 
 class Alumno : public Persona {
 private:
-    // No necesita legajo propio, lo hereda de Persona como _legajo
+    int _legajoAlumno;
 
 public:
-    // Constructor
-    Alumno(int l = 0, int d = 0, const char *nom = "S/N", const char *ape = "S/A",
-           int tel = 0, const char *dir = "S/D", const char *mail = "S/E",
-           bool est = true, Fecha fN = Fecha()
-           );
+    // --- Constructores ---
+    Alumno(); // Constructor vacío
 
-    // Métodos sobrescritos
+    // Constructor parametrizado
+    // Nota: Acepta todos los params de Persona + los de Alumno
+    Alumno(int d, const char *nom, const char *ape,
+           int tel, const Direccion &dir, const char *mail,
+           bool est, Fecha fN,
+           int legajo); // Parámetro propio de Alumno
+
+    // --- Setters y Getters ---
+    void setLegajoAlumno(int legajo);
+    int getLegajoAlumno() const;
+
+    // --- Métodos Sobrescritos ---
+    // Usamos 'override' para asegurar que estamos sobrescribiendo
+    // un método virtual de la clase base
     void Cargar() override;
     void Mostrar() override;
 };

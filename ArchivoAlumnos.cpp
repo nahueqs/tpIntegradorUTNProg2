@@ -18,28 +18,12 @@ int ArchivoAlumnos::contarRegistros() {
     return cant;
 }
 
-int ArchivoAlumnos::buscarPorLegajo(int legajo) {
-    FILE *p = fopen(nombre, "rb");
-    if (p == nullptr) return -1;
-    Alumno obj;
-    int pos = 0;
-    while (fread(&obj, sizeof obj, 1, p)) {
-        if (obj.getLegajo() == legajo) {
-            fclose(p);
-            return pos;
-        }
-        pos++;
-    }
-    fclose(p);
-    return -2; // no encontrado
-}
-
 Alumno ArchivoAlumnos::leerRegistro(int pos) {
     Alumno obj;
     FILE *p = fopen(nombre, "rb");
-    if (p == nullptr) return obj;
-    fseek(p, pos * sizeof obj, SEEK_SET);
-    fread(&obj, sizeof obj, 1, p);
+    if (p == nullptr) return obj; // Devuelve obj vacío
+    fseek(p, pos * sizeof(Alumno), SEEK_SET);
+    fread(&obj, sizeof(Alumno), 1, p);
     fclose(p);
     return obj;
 }
@@ -47,7 +31,7 @@ Alumno ArchivoAlumnos::leerRegistro(int pos) {
 bool ArchivoAlumnos::grabarRegistro(Alumno obj) {
     FILE *p = fopen(nombre, "ab");
     if (p == nullptr) return false;
-    bool escribio = fwrite(&obj, sizeof obj, 1, p);
+    bool escribio = fwrite(&obj, sizeof(Alumno), 1, p);
     fclose(p);
     return escribio;
 }
@@ -61,16 +45,222 @@ bool ArchivoAlumnos::modificarRegistro(Alumno obj, int pos) {
     return escribio;
 }
 
+int ArchivoAlumnos::generarNuevoLegajo() {
+    int cant = contarRegistros();
+    return cant + 100;
+}
+
+
+// ========== BÚSQUEDAS (Corregido) ==========
+
+int ArchivoAlumnos::buscarPorLegajo(int legajo) {
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) return -1; // Error al abrir
+    Alumno obj;
+    int pos = 0;
+    while (fread(&obj, sizeof(Alumno), 1, p)) {
+
+        // --- ¡LÍNEA CORREGIDA! ---
+        if (obj.getLegajoAlumno() == legajo) {
+            fclose(p);
+            return pos;
+        }
+        pos++;
+    }
+    fclose(p);
+    return -2; // No encontrado
+}
+
+int ArchivoAlumnos::buscarPorDni(int dni) {
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) return -1;
+    Alumno obj;
+    int pos = 0;
+    while (fread(&obj, sizeof(Alumno), 1, p)) {
+        if (obj.getDni() == dni) {
+            fclose(p);
+            return pos;
+        }
+        pos++;
+    }
+    fclose(p);
+    return -2; // No encontrado
+}
+
+// ========== VALIDACIONES ==========
+
+bool ArchivoAlumnos::existeLegajo(int legajo) {
+    return buscarPorLegajo(legajo) >= 0;
+}
+
+bool ArchivoAlumnos::existeDni(int dni) {
+    return buscarPorDni(dni) >= 0;
+}
+
+bool ArchivoAlumnos::validarLegajoUnico(int legajo) {
+    if (existeLegajo(legajo)) {
+        cout << "\n*** ERROR: Ya existe un alumno con el legajo " << legajo << " ***\n";
+        return false;
+    }
+    return true;
+}
+
+bool ArchivoAlumnos::validarDniUnico(int dni) {
+    if (existeDni(dni)) {
+        cout << "\n*** ERROR: Ya existe un alumno con el DNI " << dni << " ***\n";
+        return false;
+    }
+    return true;
+}
+
+// ========== LISTADOS ==========
+
 void ArchivoAlumnos::listar() {
+    int cant = contarRegistros();
+    if (cant == 0) {
+        cout << "No hay registros de alumnos.\n";
+        return;
+    }
+
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "Error al abrir el archivo.\n";
+        return;
+    }
+
+    Alumno obj;
+    cout << "\n========== LISTADO DE ALUMNOS ==========\n";
+    for(int i=0; i<cant; i++){
+        obj = leerRegistro(i);
+        obj.Mostrar();
+        cout << "--------------------------------\n";
+    }
+    fclose(p);
+}
+
+void ArchivoAlumnos::listarActivos() {
     FILE *p = fopen(nombre, "rb");
     if (p == nullptr) {
         cout << "No hay registros de alumnos.\n";
         return;
     }
     Alumno obj;
-    while (fread(&obj, sizeof obj, 1, p)) {
-        obj.Mostrar();
-        cout << "------------------------\n";
+    bool encontro = false;
+    cout << "\n========== ALUMNOS ACTIVOS ==========\n";
+    while (fread(&obj, sizeof(Alumno), 1, p)) {
+        if (obj.getEstado()) { // getEstado() es de Persona
+            obj.Mostrar();
+            cout << "--------------------------------\n";
+            encontro = true;
+        }
     }
     fclose(p);
+
+    if (!encontro) {
+        cout << "No hay alumnos activos.\n";
+    }
 }
+
+void ArchivoAlumnos::listarPorApellido() {
+    int cant = contarRegistros();
+    if (cant == 0) {
+        cout << "No hay alumnos registrados.\n";
+        return;
+    }
+
+    const int MAX_ALUMNOS = 1000;
+    if(cant > MAX_ALUMNOS){
+        cout << "Hay demasiados registros para este método de listado." << endl;
+        return;
+    }
+
+    Alumno alumnos[MAX_ALUMNOS];
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "Error al abrir el archivo.\n";
+        return;
+    }
+
+    int leidos = 0;
+    while (leidos < cant && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+        leidos++;
+    }
+    fclose(p);
+
+    // Ordenamiento por selección
+    for (int i = 0; i < leidos - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < leidos; j++) {
+            if (strcmp(alumnos[j].getApellido(), alumnos[minIdx].getApellido()) < 0) {
+                minIdx = j;
+            }
+        }
+        if (minIdx != i) {
+            Alumno temp = alumnos[i];
+            alumnos[i] = alumnos[minIdx];
+            alumnos[minIdx] = temp;
+        }
+    }
+
+    cout << "\n========== ALUMNOS ORDENADOS POR APELLIDO ==========\n";
+    for (int i = 0; i < leidos; i++) {
+        alumnos[i].Mostrar();
+        cout << "--------------------------------\n";
+    }
+}
+
+void ArchivoAlumnos::listarPorDni() {
+    int cant = contarRegistros();
+    if (cant == 0) {
+        cout << "No hay alumnos registrados.\n";
+        return;
+    }
+
+    const int MAX_ALUMNOS = 1000;
+    if(cant > MAX_ALUMNOS){
+        cout << "Hay demasiados registros para este método de listado." << endl;
+        return;
+    }
+
+    Alumno alumnos[MAX_ALUMNOS];
+    FILE *p = fopen(nombre, "rb");
+    if (p == nullptr) {
+        cout << "Error al abrir el archivo.\n";
+        return;
+    }
+
+    int leidos = 0;
+    while (leidos < cant && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+        leidos++;
+    }
+    fclose(p);
+
+    // Ordenamiento por selección
+    for (int i = 0; i < leidos - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < leidos; j++) {
+            if (alumnos[j].getDni() < alumnos[minIdx].getDni()) {
+                minIdx = j;
+            }
+        }
+        if (minIdx != i) {
+            Alumno temp = alumnos[i];
+            alumnos[i] = alumnos[minIdx];
+            alumnos[minIdx] = temp;
+        }
+    }
+
+    cout << "\n========== ALUMNOS ORDENADOS POR DNI ==========\n";
+    for (int i = 0; i < leidos; i++) {
+        alumnos[i].Mostrar();
+        cout << "--------------------------------\n";
+    }
+}
+
+void ArchivoAlumnos::listarSinOrdenar() {
+    listar();
+}
+
+// ========== MODIFICACIONES ==========
+
+

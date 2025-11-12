@@ -1,4 +1,8 @@
 #include "Fecha.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 Fecha::Fecha(){
     _dia = 0;
@@ -38,4 +42,17 @@ void Fecha::setAnio(int anio){
 
 std::string Fecha::toString(){
     return std::to_string(_dia) + "/" + std::to_string(_mes) + "/" + std::to_string(_anio);
+}
+
+void Fecha::Cargar(){
+    cout << "Dia: ";
+    cin >> _dia;
+    cout << "Mes: ";
+    cin >> _mes;
+    cout << "Anio: ";
+    cin >> _anio;
+}
+
+void Fecha::Mostrar() {
+    cout << toString() << endl;
 }

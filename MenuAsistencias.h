@@ -1,0 +1,6 @@
+#ifndef MENUASISTENCIAS_H_INCLUDED
+#define MENUASISTENCIAS_H_INCLUDED
+
+void menuAsistencias();
+
+#endif // MENUASISTENCIAS_H_INCLUDED

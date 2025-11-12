@@ -2,11 +2,15 @@
 #include <cstdlib>
 #include "ArchivoAlumnos.h"
 #include "ArchivoCursos.h"
+#include "MenuListados.h"
+#include "MenuConsultas.h"
+#include "MenuInformes.h"
+#include "MenuABML.h"
 
 using namespace std;
 
 // ============= MENÚ DE ALUMNOS =============
-void menuAlumnos() {
+/* void menuAlumnos() {
     ArchivoAlumnos arc;
     cout << "test" << endl;
     int opcion;
@@ -216,58 +220,64 @@ void menuCursos() {
         }
     } while(opcion != 0);
 }
-
+*/
 // ============= MENÚ PRINCIPAL =============
 int main() {
     int opcion;
-    cout << "test" << endl;
-    do {
+    bool bandera = true;
+
+    while(bandera){
+
         system("cls");
-        cout << "======================================\n";
-        cout << "   SISTEMA DE GESTION DE COLEGIO\n";
-        cout << "======================================\n";
-        cout << "1 - Gestion de Alumnos\n";
-        cout << "2 - Gestion de Cursos\n";
-        cout << "3 - Gestion de Inscripciones (En desarrollo)\n";
-        cout << "4 - Gestion de Personal (En desarrollo)\n";
-        cout << "5 - Gestion de Asistencias (En desarrollo)\n";
-        cout << "6 - Informes y Reportes (En desarrollo)\n";
-        cout << "0 - Salir del sistema\n";
-        cout << "======================================\n";
-        cout << "Opcion: ";
+        cout << "======================================" << endl;
+        cout << "   SISTEMA DE GESTION DE COLEGIO" << endl;
+        cout << "======================================" << endl;
+        cout << "1 - Listados " << endl;
+        cout << "2 - Consultas" << endl;
+        cout << "3 - Informes y Reportes " << endl;
+        cout << "4 - Gestiones ABML" << endl;
+        cout << "0 - Salir del sistema "<< endl;
+        cout << "======================================" << endl;
+        cout << "Opcion: " << endl;
         cin >> opcion;
 
-        switch(opcion) {
-        case 1:
-            menuAlumnos();
-            break;
-        case 2:
-            menuCursos();
-            break;
-        case 3:
-            cout << "\nModulo de Inscripciones en desarrollo...\n";
+        if (cin.fail()) {
+            cout << "Error: Debe ingresar solo numeros." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
             system("pause");
-            break;
-        case 4:
-            cout << "\nModulo de Personal en desarrollo...\n";
-            system("pause");
-            break;
-        case 5:
-            cout << "\nModulo de Asistencias en desarrollo...\n";
-            system("pause");
-            break;
-        case 6:
-            cout << "\nModulo de Informes en desarrollo...\n";
-            system("pause");
-            break;
-        case 0:
-            cout << "\nSaliendo del sistema...\n";
-            break;
-        default:
-            cout << "\nOpcion invalida. Intente nuevamente.\n";
-            system("pause");
+            continue;
         }
-    } while(opcion != 0);
+
+            switch(opcion) {
+                case 1:
+                    menuListados();
+                    break;
+                case 2:
+                    menuConsultas();
+                    break;
+                case 3:
+                    menuInformes();
+                    system("pause");
+                    break;
+                case 4:
+                    menuABML();
+                    system("pause");
+                    break;
+                case 0:
+                     bandera = false;
+                    cout << "Saliendo del sistema...\n"<< endl;
+
+                    break;
+                default:
+                    cout << "Opcion invalida. Intente nuevamente" << endl;
+                    system("pause");
+                    system("clear");
+            }
+
+    }
+
 
     return 0;
 }

@@ -1,33 +1,43 @@
-#include "Persona.h"
-#include <cstring>
 #include <iostream>
+#include <cstring>
+#include <string>
+#include "Persona.h"
+#include "Fecha.h"
+#include "Direccion.h"
 
 using namespace std;
 
-// Constructor CORREGIDO - Ahora sí copia los strings
-Persona::Persona(int l, int d, const char *nom, const char *ape,
-                 int tel, const char *dir, const char *mail,
-                 bool est, Fecha fN) :
-                 _legajo(l), _dni(d), _telefono(tel), _fechaNacimiento(fN), _estado(est) {
-    // Copiar los char* de forma segura
-    strncpy(_nombre, nom, 49);
-    _nombre[49] = '\0';
 
-    strncpy(_apellido, ape, 49);
-    _apellido[49] = '\0';
-
-    strncpy(_direccion, dir, 199);
-    _direccion[199] = '\0';
-
-    strncpy(_email, mail, 49);
-    _email[49] = '\0';
+Persona::Persona()
+    : _dni(0),
+      _telefono(0),
+      _direccion(),       // Llama al constructor vacío de Direccion
+      _fechaNacimiento(), // Llama al constructor vacío de Fecha
+      _estado(true)
+{
+   /// ponemos los nombres como "vacios"
+    strcpy(_nombre, "S/N");
+    strcpy(_apellido, "S/A");
+    strcpy(_email, "S/E");
 }
 
-/// GETTERS
 
-int Persona::getLegajo() const {
-    return _legajo;
+Persona::Persona(int d, const char *nom, const char *ape,
+                 int tel, const Direccion &dir,
+                 const char *mail, bool est, Fecha fN)
+    : _dni(d),
+      _telefono(tel),
+      _direccion(dir),
+      _fechaNacimiento(fN),
+      _estado(est)
+{
+    //aca usamos la funcion del strcpy para copiar los punteros al array del char
+    strcpy(_nombre, nom);
+    strcpy(_apellido, ape);
+    strcpy(_email, mail);
 }
+
+///getters
 
 int Persona::getDni() const {
     return _dni;
@@ -45,7 +55,7 @@ int Persona::getTelefono() const {
     return _telefono;
 }
 
-const char* Persona::getDireccion() const {
+Direccion Persona::getDireccion() const {
     return _direccion;
 }
 
@@ -57,37 +67,30 @@ bool Persona::getEstado() const {
     return _estado;
 }
 
-Fecha Persona::getFechaNacimiento() const {
+Fecha Persona::getFechaNacimiento(){
     return _fechaNacimiento;
 }
 
-/// SETTERS
-
-void Persona::setLegajo(int valor) {
-    _legajo = valor;
-}
+/// setters
 
 void Persona::setDni(int valor) {
     _dni = valor;
 }
 
 void Persona::setNombre(const char* valor) {
-    strncpy(_nombre, valor, 49);
-    _nombre[49] = '\0';
+    strcpy(_nombre, valor);
 }
 
 void Persona::setApellido(const char* valor) {
-    strncpy(_apellido, valor, 49);
-    _apellido[49] = '\0';
+    strcpy(_apellido, valor);
 }
 
 void Persona::setTelefono(int valor) {
     _telefono = valor;
 }
 
-void Persona::setDireccion(const char* valor) {
-    strncpy(_direccion, valor, 199);
-    _direccion[199] = '\0';
+void Persona::setDireccion(const Direccion &valor) {
+    _direccion = valor;
 }
 
 void Persona::setFechaNacimiento(Fecha fecha) {
@@ -95,63 +98,54 @@ void Persona::setFechaNacimiento(Fecha fecha) {
 }
 
 void Persona::setEmail(const char* valor) {
-    strncpy(_email, valor, 49);
-    _email[49] = '\0';
+    strcpy(_email, valor);
 }
 
 void Persona::setEstado(bool valor) {
     _estado = valor;
 }
 
-/// MÉTODOS - IMPLEMENTADOS
+/// metodos
 
 void Persona::Cargar() {
-    cout << "Ingrese legajo: ";
-    cin >> _legajo;
-
     cout << "Ingrese DNI: ";
     cin >> _dni;
-
-    cin.ignore(); // Limpiar buffer antes de getline
-
-    cout << "Ingrese nombre: ";
+    cout << "Ingrese Nombre: ";
+    cin.ignore(); // Limpia el buffer después de leer un int
     cin.getline(_nombre, 50);
-
-    cout << "Ingrese apellido: ";
+    cout << "Ingrese Apellido: ";
     cin.getline(_apellido, 50);
-
-    cout << "Ingrese telefono: ";
+    cout << "Ingrese Telefono: ";
     cin >> _telefono;
-
     cin.ignore();
 
-    cout << "Ingrese direccion: ";
-    cin.getline(_direccion, 200);
+    cout << "--- Cargando Direccion ---" << endl;
+    _direccion.Cargar(); // DELEGAMOS la carga a la clase Direccion
 
-    cout << "Ingrese email: ";
+    cout << "Ingrese Email: ";
     cin.getline(_email, 50);
 
-    cout << "Fecha de nacimiento:\n";
-    int dia, mes, anio;
-    cout << "Dia: ";
-    cin >> dia;
-    cout << "Mes: ";
-    cin >> mes;
-    cout << "Anio: ";
-    cin >> anio;
-    _fechaNacimiento = Fecha(dia, mes, anio);
+    cout << "--- Cargando Fecha de Nacimiento ---" << endl;
+    _fechaNacimiento.Cargar(); // DELEGAMOS la carga a la clase Fecha
 
-    _estado = true; // Por defecto activo
+    // Limpiamos el buffer después del último cin >> de Fecha::Cargar()
+    cin.ignore();
+
+    _estado = true;
 }
 
 void Persona::Mostrar() {
-    cout << "Legajo: " << _legajo << endl;
     cout << "DNI: " << _dni << endl;
     cout << "Nombre: " << _nombre << endl;
     cout << "Apellido: " << _apellido << endl;
     cout << "Telefono: " << _telefono << endl;
-    cout << "Direccion: " << _direccion << endl;
     cout << "Email: " << _email << endl;
-    cout << "Fecha Nacimiento: " << _fechaNacimiento.toString() << endl;
+
+    cout << "--- Direccion ---" << endl;
+    _direccion.Mostrar(); // DELEGAMOS la muestra a la clase Direccion
+
+    cout << "Fecha de Nacimiento: ";
+    _fechaNacimiento.Mostrar(); // DELEGAMOS la muestra a la clase Fecha
+
     cout << "Estado: " << (_estado ? "Activo" : "Inactivo") << endl;
 }

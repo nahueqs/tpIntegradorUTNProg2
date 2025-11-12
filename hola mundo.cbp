@@ -42,7 +42,22 @@
 		<Unit filename="Curso.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
+		<Unit filename="FuncionesListado.cpp" />
 		<Unit filename="Materia.h" />
+		<Unit filename="MenuABML.cpp" />
+		<Unit filename="MenuABML.h" />
+		<Unit filename="MenuAltaBaja.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="MenuAltaBaja.h" />
+		<Unit filename="MenuAsistencias.cpp" />
+		<Unit filename="MenuAsistencias.h" />
+		<Unit filename="MenuConsultas.cpp" />
+		<Unit filename="MenuConsultas.h" />
+		<Unit filename="MenuInformes.cpp" />
+		<Unit filename="MenuInformes.h" />
+		<Unit filename="MenuListados.cpp" />
+		<Unit filename="MenuListados.h" />
 		<Unit filename="Persona.cpp" />
 		<Unit filename="Persona.h" />
 		<Unit filename="Profesor.h" />

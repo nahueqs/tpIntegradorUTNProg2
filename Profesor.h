@@ -5,8 +5,7 @@
 
 class Profesor : public Persona {
 private:
-    int legajo;
-    char titulo[50];
+    int _legajoProfesor;
 
 public:
     Profesor(int leg = 0, const char *tit = "Sin titulo");

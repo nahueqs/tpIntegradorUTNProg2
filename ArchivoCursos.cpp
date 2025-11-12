@@ -209,6 +209,6 @@ void ArchivoCursos::listarPorAnio(int anio) {
     }
     fclose(p);
     if (!encontro) {
-        cout << "No hay cursos para ese año.\n";
+        cout << "No hay cursos para ese anio.\n";
     }
 }
