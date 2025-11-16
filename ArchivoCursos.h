@@ -10,7 +10,7 @@ private:
 public:
     ArchivoCursos(const char *n = "Cursos.dat");
 
-    // MÉTODOS BÁSICOS
+    /// metodos basicos
     int contarRegistros();
     Curso leerRegistro(int pos);
     bool grabarRegistro(Curso obj);

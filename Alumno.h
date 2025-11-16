@@ -20,7 +20,7 @@ public:
     int getLegajoAlumno() const;
 
 
-    void Cargar() override;
+    bool Cargar() override;
     void Mostrar() override;
 };
 

@@ -39,20 +39,15 @@ int Alumno::getLegajoAlumno() const {
 
 
 
-void Alumno::Cargar() {
+bool Alumno::Cargar() {
 
-    Persona::Cargar();
+    if (!Persona::Cargar()) {
 
+        return false;
+    }
 
-    int tempLegajo;
-    cout << "Ingrese Legajo: ";
-    cin >> tempLegajo;
-    setLegajoAlumno(tempLegajo);
-
-
-    cin.ignore();
+    return true;
 }
-
 
 void Alumno::Mostrar() {
 

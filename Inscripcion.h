@@ -4,7 +4,7 @@
 
 class Inscripcion {
 private:
-    // --- Atributos Privados ---
+
     int _idInscripcion;
     int _legajoAlumno;
     int _idCurso;

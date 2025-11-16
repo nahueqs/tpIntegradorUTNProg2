@@ -5,7 +5,7 @@
 #include "Direccion.h"
 
 class Persona {
-protected:
+private:
     int _dni;
     char _nombre[50];
     char _apellido[50];
@@ -14,6 +14,7 @@ protected:
     Fecha _fechaNacimiento;
     char _email[50];
     bool _estado;
+protected:
 
 public:
     /// CONSTRUCTORES
@@ -35,7 +36,7 @@ public:
     Fecha getFechaNacimiento();
 
     /// SETTERS
-    void setDni(int valor);
+    bool setDni(int valor);
     void setNombre(const char* valor);
     void setApellido(const char* valor);
     void setTelefono(int valor);
@@ -45,7 +46,7 @@ public:
     void setEstado(bool valor);
 
     /// MÉTODOS
-    virtual void Cargar();
+    virtual bool Cargar();
     virtual void Mostrar();
 };
 

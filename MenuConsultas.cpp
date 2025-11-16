@@ -1,5 +1,7 @@
 #include <iostream>
 #include "MenuConsultas.h"
+#include "ArchivoAlumnos.h"
+#include "ArchivoPersonal.h"
 using namespace std;
 
 void menuConsultas(){
@@ -136,6 +138,8 @@ void consultaAsistencias(){
 
 void consultaDocentes(){
 
+    ArchivoPersonal managerDocente("personal.dat");
+
      int opt;
     bool bandera = true;
 
@@ -162,8 +166,7 @@ void consultaDocentes(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// funcion consultar por legajo
-                    cout << "consultar DOCENTE  por legajo" << endl;
+                        managerDocente.consultarPorLegajoDocente();
                     system("pause");
                     break;
                 case 0:
@@ -180,6 +183,8 @@ void consultaDocentes(){
 }
 
 void consultaPersonal(){
+
+    ArchivoPersonal managerPersonal("personal.dat");
     int opt;
     bool bandera = true;
 
@@ -206,8 +211,7 @@ void consultaPersonal(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// funcion consultar por legajo
-                    cout << "consultar PERSONAL  por legajo" << endl;
+                        managerPersonal.consultarPorLegajo();
                     system("pause");
                     break;
                 case 0:
@@ -222,6 +226,8 @@ void consultaPersonal(){
 }
 
 void consultaAlumnos(){
+
+    ArchivoAlumnos managerAlumno("Alumnos.dat");
 
     int opt;
     bool bandera = true;
@@ -249,7 +255,7 @@ void consultaAlumnos(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// funcion consultar por legajo
+                    managerAlumno.consultarPorLegajo();
                     cout << "consultar ALUMNOS  por legajo" << endl;
                     system("pause");
                     break;

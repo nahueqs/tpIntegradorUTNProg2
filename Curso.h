@@ -6,7 +6,7 @@
 class Curso {
 private:
     int _idCurso;
-    int _legajoDocenteACargo;
+    int _legajoDocenteACargo;   /// este seria legajo docente
     char _descripcionCurso[100];
     int _numAula;
     int _cantInscriptos;

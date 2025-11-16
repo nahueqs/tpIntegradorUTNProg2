@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include "MenuListados.h"
+#include "ArchivoAlumnos.h"
+#include "ArchivoPersonal.h"
 using namespace std;
 
 void menuListados(){
@@ -69,6 +71,8 @@ void menuListados(){
 
 void listadoPersonal (){
 
+    ArchivoPersonal managerPersonal("personal.dat");
+
     int opt;
     bool bandera = true;
 
@@ -78,8 +82,11 @@ void listadoPersonal (){
         cout << "======================================\n";
         cout << "              LISTADO PERSONAL         " << endl;
         cout << "======================================\n";
-        cout << "1 - Listar por Turno" << endl;
-        cout << "2 - Listar por cargo" << endl;
+        cout << "1 - Listar Ordenados por Legajo Docente" << endl;
+        cout << "2 - Listar Ordenados por Legajo" << endl;
+        cout << "3 - Listar Ordenados por Cargo" << endl;
+        cout << "4 - Listar Ordenados por Turno" << endl;
+        cout << "5 - Listar Inactivos" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -96,14 +103,27 @@ void listadoPersonal (){
             switch(opt) {
                 case 1:
                     system("cls");
-
-                    cout << "listado por turnoooooooooooooo" << endl;
+                        managerPersonal.listarPorLegajoDocente();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// funcion listar por cargo;
-                    cout << "listado por cargoooooo" << endl;
+                        managerPersonal.listarPorLegajo();
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                        managerPersonal.listarPorCargo();
+                    system("pause");
+                    break;
+                case 4:
+                    system("cls");
+                        managerPersonal.listarPorTurno();
+                    system("pause");
+                    break;
+                case 5:
+                    system("cls");
+                        managerPersonal.listarInactivos();
                     system("pause");
                     break;
                 case 0:
@@ -121,6 +141,8 @@ void listadoPersonal (){
 }
 
 void listadoAlumnos (){
+
+    ArchivoAlumnos managerAlumno("alumno.dat");
     int opt;
     bool bandera = true;
 
@@ -133,6 +155,7 @@ void listadoAlumnos (){
         cout << "1 - Listar por Apellido" << endl;
         cout << "2 - Listar por DNI" << endl;
         cout << "3 - listar por Legajo " << endl;
+        cout << "4 - Listar Inactivos" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -149,21 +172,24 @@ void listadoAlumnos (){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// funcion listar por apellido
-                    cout << "listado por APELLIDO" << endl;
+                    managerAlumno.listarPorApellido();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// funcion listar por DNI
-                    cout << "listado por DNI" << endl;
+                    managerAlumno.listarPorDni();
+
                     system("pause");
 
                     break;
                  case 3:
                      system("cls");
-                     /// funcion listar por LEGAJO
-                    cout << "listado por LEGAJO" << endl;
+                     managerAlumno.listarPorLegajo();
+                    system("pause");
+                    break;
+                 case 4:
+                     system("cls");
+                     managerAlumno.listarInactivos();
                     system("pause");
                     break;
                 case 0:

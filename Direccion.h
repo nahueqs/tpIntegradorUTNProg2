@@ -12,7 +12,7 @@ private:
 
 public:
    /// constructores
-    Direccion(); // Vacio
+    Direccion();
     Direccion(const char *calle, int num, const char *piso,
               const char *depto, const char *loc, const char *cp);
 /// stters

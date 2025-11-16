@@ -10,29 +10,40 @@ private:
 public:
     ArchivoAlumnos(const char *n = "Alumnos.dat");
 
-    // MÉTODOS BÁSICOS
+    // metodos basicos
     int contarRegistros();
     Alumno leerRegistro(int pos);
     bool grabarRegistro(Alumno obj);
     bool modificarRegistro(Alumno obj, int pos);
     int generarNuevoLegajo();
 
-    // BÚSQUEDAS
+    // busquedas
     int buscarPorLegajo(int legajo);
     int buscarPorDni(int dni);
 
-    // VALIDACIONES
+    // validacinoes
     bool existeLegajo(int legajo);
     bool existeDni(int dni);
     bool validarLegajoUnico(int legajo);
     bool validarDniUnico(int dni);
 
-    // LISTADOS
+    // listados
     void listar();
-    void listarActivos();
+    void listarInactivos();
     void listarPorApellido();
     void listarPorDni();
-    void listarSinOrdenar();
+    void listarPorLegajo();
+
+    /// Consultas
+    void consultarPorLegajo();
+
+    // ALTA Y BAJA
+    void altaAlumno();
+    void bajaAlumno();
+    void reactivarAlumno();
+
+    // MODIFICACIONES
+    void modificar();
 
     /// MODIFICAICONES
 

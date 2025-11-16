@@ -73,8 +73,13 @@ Fecha Persona::getFechaNacimiento(){
 
 /// setters
 
-void Persona::setDni(int valor) {
-    _dni = valor;
+bool Persona::setDni(int dni) {
+
+    if (dni > 100000) {
+        _dni = dni;
+        return true;
+    }
+    return false;
 }
 
 void Persona::setNombre(const char* valor) {
@@ -107,30 +112,65 @@ void Persona::setEstado(bool valor) {
 
 /// metodos
 
-void Persona::Cargar() {
-    cout << "Ingrese DNI: ";
-    cin >> _dni;
-    cout << "Ingrese Nombre: ";
-    cin.ignore();
+bool Persona::Cargar() {
+    int dniTemporal;
+
+    while (true) {
+        cout << "Ingrese DNI (o 0 para cancelar): " << endl;
+
+        if (cin >> dniTemporal) {
+            if (dniTemporal == 0) {
+                return false;
+            }
+            if (setDni(dniTemporal) == true) {
+                break;
+            } else {
+                cout << "*** DNI no valido. Debe ser un numero positivo de 6 digitos o mas. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. *** " << endl;;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+
+
+    cout << "Ingrese Nombre: " << endl;
+    cin.ignore(10000, '\n');
     cin.getline(_nombre, 50);
-    cout << "Ingrese Apellido: ";
+    setNombre(_nombre);
+
+    cout << "Ingrese Apellido: " << endl;
     cin.getline(_apellido, 50);
-    cout << "Ingrese Telefono: ";
-    cin >> _telefono;
-    cin.ignore();
+    setApellido(_apellido);
+
+    while (true) {
+        cout << "Ingrese Telefono: " << endl;
+        if (cin >> _telefono) {
+            break;
+        } else {
+
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
     cout << "--- Cargando Direccion ---" << endl;
+    cin.ignore(10000, '\n');
     _direccion.Cargar();
 
-    cout << "Ingrese Email: ";
+
+    cout << "Ingrese Email: " << endl;
     cin.getline(_email, 50);
+
 
     cout << "--- Cargando Fecha de Nacimiento ---" << endl;
     _fechaNacimiento.Cargar();
 
-    cin.ignore();
+    cin.ignore(10000, '\n');
 
-    _estado = true;
+    return true;
 }
 
 void Persona::Mostrar() {

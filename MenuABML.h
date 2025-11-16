@@ -4,7 +4,6 @@
 void menuABML();
 void abmlAlumnos();
 void abmlPersonal();
-void abmlCargos();
 void abmlCursos();
 void abmlAsistencias();
 
