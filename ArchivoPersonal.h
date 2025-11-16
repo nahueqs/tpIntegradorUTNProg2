@@ -41,5 +41,5 @@ public:
     void listarPorLegajo(); /// ordenados por el legajo personal, lista todos
     void listarPorCargo();   /// ordenados por cargo
     void listarPorTurno(); /// ordenados por turno primero ma;ana despues tarde y ultimo noche
-    void listarInactivos(); /// ordenados por turnos maniana tarde noche
+    void listarInactivos();
 };

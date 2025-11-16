@@ -1,93 +1,114 @@
-#include <iostream>
 #include "Inscripcion.h"
+#include <iostream>
+#include <cstring>
+
 using namespace std;
 
 
-Inscripcion::Inscripcion() :
-    _legajoAlumno(0),
-    _idInscripcion(0),
-    _idCurso(0),
-    _fechaInscripcion(),
-    _importeMatricula(0),
-    _matriculaPaga(false),
-    _estado(false)
-{
-
+Inscripcion::Inscripcion() {
+    _idInscripcion = 0;
+    _legajoAlumno = 0;
+    _idCurso = 0;
+    _importeMatricula = 0.0f;
+    _matriculaPaga = false;
+    _estado = false;
 }
 
 
-Inscripcion::Inscripcion(int legajo, int idInsc, int idCurso, int dia, int mes, int anio, int importe, bool paga, bool estado) :
-    _legajoAlumno(legajo),
-    _idInscripcion(idInsc),
-    _idCurso(idCurso),
-    _fechaInscripcion(dia, mes, anio),
-    _importeMatricula(importe),
-    _matriculaPaga(paga),
-    _estado(estado)
-{
+void Inscripcion::setIdInscripcion(int id) { _idInscripcion = id; }
 
+bool Inscripcion::setLegajoAlumno(int legajo) {
+    if (legajo > 0) {
+        _legajoAlumno = legajo;
+        return true;
+    }
+    return false;
 }
 
-/// seters
-
-
-void Inscripcion::setLegajoAlumno(int legajo) {
-    _legajoAlumno = legajo;
+bool Inscripcion::setIdCurso(int id) {
+    if (id > 0) {
+        _idCurso = id;
+        return true;
+    }
+    return false;
 }
-
-void Inscripcion::setIdInscripcion(int id) {
-    _idInscripcion = id;
-}
-
-void Inscripcion::setIdCurso(int id) {
-    _idCurso = id;
-}
-
-void Inscripcion::setFechaInscripcion(const Fecha& fecha) {
-    _fechaInscripcion = fecha;
-}
-
-void Inscripcion::setImporteMatricula(int importe) {
-    _importeMatricula = importe;
-}
-
-void Inscripcion::setMatriculaPaga(bool paga) {
-    _matriculaPaga = paga;
-}
-
-void Inscripcion::setEstado(bool estado) {
-    _estado = estado;
-}
-
+/// settters
+void Inscripcion::setFechaInscripcion(Fecha fecha) { _fechaInscripcion = fecha; }
+void Inscripcion::setImporteMatricula(float importe) { _importeMatricula = importe; }
+void Inscripcion::setMatriculaPaga(bool pagada) { _matriculaPaga = pagada; }
+void Inscripcion::setEstado(bool estado) { _estado = estado; }
 
 /// getters
+int Inscripcion::getIdInscripcion() const { return _idInscripcion; }
+int Inscripcion::getLegajoAlumno() const { return _legajoAlumno; }
+int Inscripcion::getIdCurso() const { return _idCurso; }
+Fecha Inscripcion::getFechaInscripcion() const { return _fechaInscripcion; }
+float Inscripcion::getImporteMatricula() const { return _importeMatricula; }
+bool Inscripcion::getMatriculaPaga() const { return _matriculaPaga; }
+bool Inscripcion::getEstado() const { return _estado; }
 
-int Inscripcion::getLegajoAlumno() const {
-    return _legajoAlumno;
+/// cargar mostrar
+
+bool Inscripcion::Cargar() {
+    int legajoTemporal;
+    int idTemporal;
+
+
+    while (true) {
+        cout << "Ingrese Legajo del Alumno (o 0 para cancelar): " << endl;
+        if (cin >> legajoTemporal) {
+            if (legajoTemporal == 0) {
+                return false;
+            }
+            if (setLegajoAlumno(legajoTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: El legajo debe ser un numero positivo. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+
+
+    while (true) {
+        cout << "Ingrese ID del Curso (o 0 para cancelar): " << endl;
+        if (cin >> idTemporal) {
+            if (idTemporal == 0) {
+                return false;
+            }
+            if (setIdCurso(idTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: El ID del curso debe ser un numero positivo. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+
+
+    cout << "--- Ingresando Fecha de Inscripcion ---" << endl;
+    _fechaInscripcion.Cargar();
+
+    cin.ignore(10000, '\n');
+    return true;
 }
 
-int Inscripcion::getIdInscripcion() const {
-    return _idInscripcion;
-}
-
-int Inscripcion::getIdCurso() const {
-    return _idCurso;
-}
-
-Fecha Inscripcion::getFechaInscripcion() const {
-    return _fechaInscripcion;
-}
-
-int Inscripcion::getImporteMatricula() const {
-    return _importeMatricula;
-}
-
-bool Inscripcion::getMatriculaPaga() const {
-    return _matriculaPaga;
-}
-
-bool Inscripcion::getEstado() const {
-    return _estado;
+void Inscripcion::Mostrar() {
+    cout << "ID Inscripcion: " << _idInscripcion << endl;
+    cout << "Legajo Alumno: " << _legajoAlumno << endl;
+    cout << "ID Curso: " << _idCurso << endl;
+    cout << "Fecha de Inscripcion: ";
+    _fechaInscripcion.Mostrar();
+    cout << endl;
+    cout << "Importe Matricula: $" << _importeMatricula << endl;
+    cout << "Matricula Pagada: " << (_matriculaPaga ? "SI" : "NO") << endl;
+    cout << "Estado: " << (_estado ? "Activa" : "Inactiva") << endl;
 }
 
 

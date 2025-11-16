@@ -20,6 +20,7 @@ public:
     // busquedas
     int buscarPorLegajo(int legajo);
     int buscarPorDni(int dni);
+    Alumno buscarYLeerPorLegajo(int legajo);
 
     // validacinoes
     bool existeLegajo(int legajo);

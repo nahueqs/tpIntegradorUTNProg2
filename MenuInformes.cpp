@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "MenuInformes.h"
 
+
 using namespace std;
 
 void menuInformes(){

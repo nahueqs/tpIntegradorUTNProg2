@@ -4,6 +4,7 @@
 #include "ArchivoAlumnos.h"
 #include "ArchivoPersonal.h"
 #include "ArchivoCursos.h"
+#include "ArchivoInscripcion.h"
 using namespace std;
 
 void menuListados(){
@@ -266,6 +267,8 @@ void listadoCursos(){
 }
 
 void listadoInscripciones(){
+
+    ArchivoInscripcion managerInscripciones ("Inscripciones.dat");
     int opt;
     bool bandera = true;
 
@@ -273,9 +276,12 @@ void listadoInscripciones(){
 
         system("cls");
         cout << "======================================\n";
-        cout << "              LISTADO CURSOS        " << endl;
+        cout << "              LISTADO INSCRIPCIONES       " << endl;
         cout << "======================================\n";
-        cout << "1 - Listados por id Curso" << endl;
+        cout << "1 - Listados por ID CURSO" << endl;
+        cout << "2 - Listar Inscripciones de un alumno" << endl;
+        cout << "3 - Listar Activos ordenados por Legajo" << endl;
+        cout << "4 - Listar Inactivos" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -292,8 +298,22 @@ void listadoInscripciones(){
             switch(opt) {
                 case 1:
                     system("cls");
-                      /// funcion listar por turno
-                    cout << "listado por ID CURSO" << endl;
+                        managerInscripciones.listarPorCurso();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                        managerInscripciones.listarPorAlumno();
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                        managerInscripciones.listarActivas();
+                    system("pause");
+                    break;
+                case 4:
+                    system("cls");
+                        managerInscripciones.listarInactivas();
                     system("pause");
                     break;
                 case 0:

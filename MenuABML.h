@@ -6,5 +6,6 @@ void abmlAlumnos();
 void abmlPersonal();
 void abmlCursos();
 void abmlAsistencias();
+void abmlInscripciones();
 
 #endif // MENUABML_H_INCLUDED

@@ -1,16 +1,43 @@
-#ifndef ARCHIVOINSCRIPCION_H
-#define ARCHIVOINSCRIPCION_H
+#pragma once
+#include "Inscripcion.h";
+
+class ArchivoInscripcion {
+private:
+    char _nombre[30];
 
 
-class ArchivoInscripcion
-{
-    public:
-        ArchivoInscripcion();
-        virtual ~ArchivoInscripcion();
+public:
 
-    protected:
+    ArchivoInscripcion(const char* nombre = "Inscripciones.dat");
 
-    private:
+    /// basicas
+    int contarRegistros();
+    bool grabarRegistro(Inscripcion obj);
+    Inscripcion leerRegistro(int pos);
+    bool modificarRegistro(Inscripcion obj, int pos);
+
+
+    int generarNuevoIdInscripcion();
+
+    /// bsquedas
+    int buscarPorId(int id);
+    int buscarInscripcionDuplicada(int legajoAlumno, int idCurso);
+
+    //// alta, baja y cancelar si es que habia deuda
+    void inscribirAlumno();
+    void anularInscripcion();
+    void cancelarDeuda();
+
+    /// listadoss
+
+    void listarPorCurso();
+    void listarPorAlumno();
+    void listarActivas(); /// lista todas las inscripciones
+    void listarInactivas(); /// lista las bajas
+
+    //// consultas
+    void consultarPorId();
+    void consultarPorAlumnoYCurso();
+
+    int contarInscriptos(int idCurso);
 };
-
-#endif // ARCHIVOINSCRIPCION_H

@@ -3,6 +3,7 @@
 #include "ArchivoAlumnos.h"
 #include "ArchivoPersonal.h"
 #include "ArchivoCursos.h"
+#include  "ArchivoInscripcion.h"
 using namespace std;
 
 void menuConsultas(){
@@ -339,6 +340,7 @@ void consultaCursos(){
 
 void consultaInscripciones(){
 
+    ArchivoInscripcion managerInscripcion ("Inscripciones.dat");
     int opt;
     bool bandera = true;
 
@@ -348,9 +350,8 @@ void consultaInscripciones(){
         cout << "======================================\n";
         cout << "              CONSULTAS INSCRIPCIONES      " << endl;
         cout << "======================================\n";
-        cout << "1 - Consultar por curso" << endl;
-        cout << "2 - Consultar por alumno" << endl;
-        cout << "3 - Consultar por curso y matricula no paga " << endl;
+        cout << "1 - Consultar por Id Inscripcion" << endl;
+        cout << "2 - Consultar por alumno y curso" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -367,22 +368,14 @@ void consultaInscripciones(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// Consultar por CURSO
-                    cout << "Consultar por curso" << endl;
+                        managerInscripcion.consultarPorId();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// Consultar por alumno
-                    cout << "Consultar por alumno" << endl;
+                        managerInscripcion.consultarPorAlumnoYCurso();
                     system("pause");
 
-                    break;
-                case 3:
-                     system("cls");
-                     ///Consultar por curso y matricula no paga
-                    cout << "Consultar por curso y matricula no paga " << endl;
-                    system("pause");
                     break;
                 case 0:
                     bandera = false;

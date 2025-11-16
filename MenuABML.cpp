@@ -3,6 +3,7 @@
 #include "ArchivoAlumnos.h"
 #include "ArchivoPersonal.h"
 #include "ArchivoCursos.h"
+#include "ArchivoInscripcion.h"
 using namespace std;
 
 void menuABML(){
@@ -256,6 +257,61 @@ void abmlCursos(){
 
     }
 
+}
+void abmlInscripciones(){
+
+    ArchivoInscripcion managerInscripcion ("Inscripciones.dat");
+    int opt;
+    bool bandera = true;
+
+    while (bandera) {
+
+        system("cls");
+        cout << "======================================\n";
+        cout << "              Gestion ABML Alumnos        " << endl;
+        cout << "======================================\n";
+        cout << "1 - ALTA Inscripcion" << endl;
+        cout << "2 - BAJA Inscripcion"<< endl;
+        cout << "3 - Cancelar Deuda" << endl;
+        cout << "0 - Volver " << endl;
+        cin >> opt;
+
+         if (cin.fail()) {
+            cout << "Error: Debe ingresar solo numeros." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("pause");
+            continue;
+        }
+
+
+            switch(opt) {
+                case 1:
+                    system("cls");
+                        managerInscripcion.inscribirAlumno();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                        managerInscripcion.anularInscripcion();
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                        managerInscripcion.cancelarDeuda();
+                    system("pause");
+                    break;
+                case 0:
+                    bandera = false;
+                    break;
+                default: cout << "opcion no valida"<< endl;
+                    system("pause");
+
+            }
+
+
+    }
 }
 void abmlAsistencias(){}
 

@@ -91,6 +91,17 @@ int ArchivoAlumnos::buscarPorDni(int dni) {
     return -2;
 }
 
+Alumno ArchivoAlumnos::buscarYLeerPorLegajo(int legajo) {
+    int pos = buscarPorLegajo(legajo);
+
+    if (pos >= 0) {
+        return leerRegistro(pos);
+    }
+
+
+    return leerRegistro(-1);
+}
+
 /// validaciones
 
 bool ArchivoAlumnos::existeLegajo(int legajo) {

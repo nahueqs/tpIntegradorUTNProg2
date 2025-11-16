@@ -54,7 +54,7 @@ int main() {
                     break;
                 case 0:
                      bandera = false;
-                    cout << "Saliendo del sistema...\n"<< endl;
+                    cout << "Saliendo del sistema..."<< endl;
 
                     break;
                 default:

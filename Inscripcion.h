@@ -1,42 +1,40 @@
 #pragma once
-#include <string>
+#pragma once
 #include "Fecha.h"
 
 class Inscripcion {
 private:
-
     int _idInscripcion;
     int _legajoAlumno;
     int _idCurso;
     Fecha _fechaInscripcion;
-    int _importeMatricula;
+    float _importeMatricula;
     bool _matriculaPaga;
     bool _estado;
 
 public:
-    /// constructores
     Inscripcion();
-    Inscripcion(int legajo, int idInsc, int idCurso, int dia, int mes, int anio, int importe, bool paga, bool estado);
 
-    /// setters
-    void setLegajoAlumno(int legajo);
+    /// setter
     void setIdInscripcion(int id);
-    void setIdCurso(int id);
-    void setFechaInscripcion(const Fecha& fecha);
-    void setImporteMatricula(int importe);
-    void setMatriculaPaga(bool paga);
+    bool setLegajoAlumno(int legajo);
+    bool setIdCurso(int id);
+    void setFechaInscripcion(Fecha fecha);
+    void setImporteMatricula(float importe);
+    void setMatriculaPaga(bool pagada);
     void setEstado(bool estado);
 
     /// getters
-    int getLegajoAlumno() const;
     int getIdInscripcion() const;
+    int getLegajoAlumno() const;
     int getIdCurso() const;
     Fecha getFechaInscripcion() const;
-    int getImporteMatricula() const;
+    float getImporteMatricula() const;
     bool getMatriculaPaga() const;
     bool getEstado() const;
 
-    // mstrar cargar
-    void mostar();
-    void cargar();
+    //// cargar mostrar
+
+    bool Cargar();
+    void Mostrar();
 };
