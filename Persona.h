@@ -20,7 +20,6 @@ public:
     /// CONSTRUCTORES
     Persona();
 
-
     Persona(int d, const char *nom, const char *ape,
             int tel, const Direccion &dir,
             const char *mail, bool est, Fecha fN);

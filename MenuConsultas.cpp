@@ -2,6 +2,7 @@
 #include "MenuConsultas.h"
 #include "ArchivoAlumnos.h"
 #include "ArchivoPersonal.h"
+#include "ArchivoCursos.h"
 using namespace std;
 
 void menuConsultas(){
@@ -272,6 +273,8 @@ void consultaAlumnos(){
 }
 
 void consultaCursos(){
+
+    ArchivoCursos managerCursos("Cursos.dat");
     int opt;
     bool bandera = true;
 
@@ -281,10 +284,10 @@ void consultaCursos(){
         cout << "======================================\n";
         cout << "              CONSULTAS CURSOS    " << endl;
         cout << "======================================\n";
-        cout << "1 - Consultar por Cantidad de inscriptos mayor o menor .... " << endl;
-        cout << "2 - Consultar por Costo de matricula mayor o menor  A ..." << endl;
-        cout << "3 - Consultar por numero de aula" << endl;
-        cout << "4 - Consultar por ID docente a cargo" << endl;
+        cout << "1- Consultar por numero de aula" << endl;
+        cout << "2 - Consultar por ID docente a cargo" << endl;
+        cout << "3 - Consultar Por Costo"<< endl;
+        cout << "3 - Consultar por ID Curso" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -301,27 +304,23 @@ void consultaCursos(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// Consultar por Cantidad de inscriptos mayor o menor ....
-                    cout << "Consultar por Cantidad de inscriptos mayor o menor ...." << endl;
+                        managerCursos.consultarPorNumAula();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// Consultar por Costo de matricula mayor o menor  A ...
-                    cout << "Consultar por Costo de matricula mayor o menor  A ..." << endl;
+                        managerCursos.consularPorLegajoDocente();
                     system("pause");
 
                     break;
                 case 3:
                      system("cls");
-                     ///Consultar por numero de aula
-                    cout << "Consultar por numero de aula" << endl;
+                        managerCursos.consultarPorCosto();
                     system("pause");
                     break;
                 case 4:
                      system("cls");
-                     ///Consultar por ID docente a cargo
-                    cout << "Consultar por ID docente a cargo" << endl;
+                        managerCursos.consultarPorIdCurso();
                     system("pause");
                     break;
                 case 0:

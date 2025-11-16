@@ -1,7 +1,8 @@
 #include <iostream>
 #include "MenuABML.h"
 #include "ArchivoAlumnos.h"
-#include "ArchivoPersonal.h";
+#include "ArchivoPersonal.h"
+#include "ArchivoCursos.h"
 using namespace std;
 
 void menuABML(){
@@ -45,7 +46,7 @@ void menuABML(){
                 system("pause");
                 break;
             case 3:
-
+                abmlCursos();
                 system("pause");
                 break;
             case 4:
@@ -84,7 +85,7 @@ void abmlAlumnos(){
         cout << "1 - ALTA ALUMNO" << endl;
         cout << "2 - BAJA ALUMNO"<< endl;
         cout << "3 - ReAlta Alumno" << endl;
-        cout << "3 - MODIFICACIONES" << endl;
+        cout << "4 - MODIFICACIONES" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -147,7 +148,7 @@ void abmlPersonal(){
         cout << "1 - ALTA Personal" << endl;
         cout << "2 - BAJA Personal"<< endl;
         cout << "3 - ReAlta Personal" << endl;
-        cout << "3 - MODIFICACIONES" << endl;
+        cout << "4 - MODIFICACIONES" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -194,8 +195,68 @@ void abmlPersonal(){
     }
 
 }
-void abmlCargos(){}
-void abmlCursos(){}
+void abmlCursos(){
+    ArchivoCursos managerCursos("Cursos.dat");
+
+    int opt;
+    bool bandera = true;
+
+    while (bandera) {
+
+        system("cls");
+        cout << "======================================\n";
+        cout << "              Gestion ABML Alumnos        " << endl;
+        cout << "======================================\n";
+        cout << "1 - ALTA Curso" << endl;
+        cout << "2 - BAJA Curso"<< endl;
+        cout << "3 - ReAlta Curso" << endl;
+        cout << "4 - MODIFICACIONES" << endl;
+        cout << "0 - Volver " << endl;
+        cin >> opt;
+
+         if (cin.fail()) {
+            cout << "Error: Debe ingresar solo numeros." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("pause");
+            continue;
+        }
+
+
+            switch(opt) {
+                case 1:
+                    system("cls");
+                      managerCursos.darDeAlta();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                        managerCursos.darDeBaja();
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                        managerCursos.reactivar();
+                    system("pause");
+                    break;
+                case 4:
+                    system("cls");
+                        managerCursos.modificar();
+                    system("pause");
+                    break;
+                case 0:
+                    bandera = false;
+                    break;
+                default: cout << "opcion no valida"<< endl;
+                    system("pause");
+
+            }
+
+
+    }
+
+}
 void abmlAsistencias(){}
 
 

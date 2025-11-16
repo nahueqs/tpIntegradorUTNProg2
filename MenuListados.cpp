@@ -3,6 +3,7 @@
 #include "MenuListados.h"
 #include "ArchivoAlumnos.h"
 #include "ArchivoPersonal.h"
+#include "ArchivoCursos.h"
 using namespace std;
 
 void menuListados(){
@@ -207,6 +208,8 @@ void listadoAlumnos (){
 }
 
 void listadoCursos(){
+
+    ArchivoCursos managerCurso("Cursos.dat");
     int opt;
     bool bandera = true;
 
@@ -216,8 +219,9 @@ void listadoCursos(){
         cout << "======================================\n";
         cout << "              LISTADO PERSONAL         " << endl;
         cout << "======================================\n";
-        cout << "1 - Listar por Curso" << endl;
+        cout << "1 - Listar por IdCurso" << endl;
         cout << "2 - Listar por Cantidad Maxima Alumno" << endl;
+        cout << "3 - Listar Cursos inactivos"<< endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -234,14 +238,18 @@ void listadoCursos(){
             switch(opt) {
                 case 1:
                     system("cls");
-                      /// funcion listar por turno
-                    cout << "listado por CUrso" << endl;
+                      managerCurso.listarPorIdCurso();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// funcion listar por cargo;
-                    cout << "listado por cantidad maxima alumno" << endl;
+                        managerCurso.listarPorMaxAlumnos();
+
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                        managerCurso.listarInactivos();
                     system("pause");
                     break;
                 case 0:

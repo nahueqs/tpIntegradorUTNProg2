@@ -52,7 +52,6 @@
 		<Unit filename="Fecha.h" />
 		<Unit filename="Inscripcion.cpp" />
 		<Unit filename="Inscripcion.h" />
-		<Unit filename="Materia.h" />
 		<Unit filename="MenuABML.cpp" />
 		<Unit filename="MenuABML.h" />
 		<Unit filename="MenuAsistencias.cpp" />
@@ -65,11 +64,10 @@
 		<Unit filename="MenuListados.h" />
 		<Unit filename="Persona.cpp" />
 		<Unit filename="Persona.h" />
-		<Unit filename="Personal.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="Personal.cpp" />
 		<Unit filename="Personal.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="rlutil.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

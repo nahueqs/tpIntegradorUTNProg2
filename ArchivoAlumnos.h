@@ -41,8 +41,6 @@ public:
     void altaAlumno();
     void bajaAlumno();
     void reactivarAlumno();
-
-    // MODIFICACIONES
     void modificar();
 
     /// MODIFICAICONES

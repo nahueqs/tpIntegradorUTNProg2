@@ -1,158 +1,181 @@
 #include "Curso.h"
-#include <cstring>
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
-// Constructor
-Curso::Curso(int id, int legajoDoc, const char* desc, int aula,
-             int cantInsc, Fecha anio, int maxAlum, float costo, bool est)
-    : _idCurso(id), _legajoDocenteACargo(legajoDoc), _numAula(aula),
-      _cantInscriptos(cantInsc), _anio(anio), _maxAlumnos(maxAlum),
-      _costoMatricula(costo), _estado(est) {
-    strncpy(_descripcionCurso, desc, 99);
+Curso::Curso() {
+    _idCurso = 0;
+    _legajoDocenteACargo = 0;
+    strcpy(_descripcionCurso, "");
+    _numAula = 0;
+    _maxAlumnos = 0;
+    _anio = 0;
+    _costoMatricula = 0.0f;
+    _estado = false;
+}
+
+
+Curso::Curso(int id, int legajoDoc, const char* desc, int numAula, int maxAlu, int anio, float costo, bool estado) {
+
+    setIdCurso(id);
+    setLegajoDocente(legajoDoc);
+    setDescripcion(desc);
+    setNumAula(numAula);
+    setMaxAlumnos(maxAlu);
+    setAnio(anio);
+    setCostoMatricula(costo);
+    setEstado(estado);
+}
+
+//// setters
+
+void Curso::setIdCurso(int id) { _idCurso = id; }
+
+void Curso::setLegajoDocente(int legajo) { _legajoDocenteACargo = legajo; }
+
+void Curso::setDescripcion(const char* descripcion) {
+    strncpy(_descripcionCurso, descripcion, 99);
     _descripcionCurso[99] = '\0';
 }
 
-// GETTERS
-int Curso::getIdCurso() const {
-    return _idCurso;
+bool Curso::setNumAula(int num) {
+    if (num <= 0) {
+        return false;
+    }
+    _numAula = num;
+    return true;
 }
 
-int Curso::getLegajoDocenteACargo() const {
-    return _legajoDocenteACargo;
+bool Curso::setMaxAlumnos(int max) {
+    if (max <= 0) {
+        return false;
+    }
+    _maxAlumnos = max;
+    return true;
 }
 
-const char* Curso::getDescripcionCurso() const {
-    return _descripcionCurso;
+bool Curso::setAnio(int anio) {
+    if (anio < 2020 || anio > 2030) {
+        return false;
+    }
+    _anio = anio;
+    return true;
 }
 
-int Curso::getNumAula() const {
-    return _numAula;
+bool Curso::setCostoMatricula(float costo) {
+    if (costo < 0) {
+        return false;
+    }
+    _costoMatricula = costo;
+    return true;
 }
 
-int Curso::getCantInscriptos() const {
-    return _cantInscriptos;
-}
+void Curso::setEstado(bool estado) { _estado = estado; }
 
-Fecha Curso::getAnio() const {
-    return _anio;
-}
+/// ggetters
+int Curso::getIdCurso() const { return _idCurso; }
+int Curso::getLegajoDocente() const { return _legajoDocenteACargo; }
+const char* Curso::getDescripcion() const { return _descripcionCurso; }
+int Curso::getNumAula() const { return _numAula; }
+int Curso::getMaxAlumnos() const { return _maxAlumnos; }
+int Curso::getAnio() const { return _anio; }
+float Curso::getCostoMatricula() const { return _costoMatricula; }
+bool Curso::getEstado() const { return _estado; }
 
-int Curso::getMaxAlumnos() const {
-    return _maxAlumnos;
-}
 
-float Curso::getCostoMatricula() const {
-    return _costoMatricula;
-}
+/// cargar msotrar
+bool Curso::Cargar() {
+    char descTemporal[100];
+    int intTemporal;
+    float floatTemporal;
 
-bool Curso::getEstado() const {
-    return _estado;
-}
+    while (true) {
+        cout << "Ingrese Numero de Aula (o 0 para cancelar): " << endl;
 
-// SETTERS
-void Curso::setIdCurso(int valor) {
-    _idCurso = valor;
-}
+        if (cin >> intTemporal) { /// pd: como en persona esta explicado ahi
 
-void Curso::setLegajoDocenteACargo(int valor) {
-    _legajoDocenteACargo = valor;
-}
+            if (intTemporal == 0) {
+                return false;
+            }
 
-void Curso::setDescripcionCurso(const char* valor) {
-    strncpy(_descripcionCurso, valor, 99);
-    _descripcionCurso[99] = '\0';
-}
 
-void Curso::setNumAula(int valor) {
-    _numAula = valor;
-}
+            if (setNumAula(intTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: El numero de aula debe ser positivo ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numero ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-void Curso::setCantInscriptos(int valor) {
-    _cantInscriptos = valor;
-}
+    cin.ignore(10000, '\n');
+    cout << "Ingrese Descripcion del Curso: " << endl;
+    cin.getline(descTemporal, 100);
+    setDescripcion(descTemporal);
 
-void Curso::setAnio(Fecha valor) {
-    _anio = valor;
-}
+    while (true) {
+        cout << "Ingrese Capacidad Maxima de Alumnos: " << endl;
+        if (cin >> intTemporal) {
+            if (setMaxAlumnos(intTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: La capacidad debe ser positiva ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-void Curso::setMaxAlumnos(int valor) {
-    _maxAlumnos = valor;
-}
+    while (true) {
+        cout << "Ingrese Anio (ej. 2024): " << endl;
+        if (cin >> intTemporal) {
+            if (setAnio(intTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: El anio debe ser entre 2020 y 2030. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-void Curso::setCostoMatricula(float valor) {
-    _costoMatricula = valor;
-}
+    while (true) {
+        cout << "Ingrese Costo de Matricula: " << endl;
+        if (cin >> floatTemporal) {
+            if (setCostoMatricula(floatTemporal)) {
+                break;
+            } else {
+                cout << "*** ERROR: El costo no puede ser negativo. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-void Curso::setEstado(bool valor) {
-    _estado = valor;
-}
+    cin.ignore(10000, '\n');
 
-// MÉTODOS
-void Curso::Cargar() {
-    cout << "\n=== CARGAR CURSO ===\n";
-
-    cout << "Ingrese ID del curso: ";
-    cin >> _idCurso;
-
-    cout << "Ingrese legajo del docente a cargo: ";
-    cin >> _legajoDocenteACargo;
-
-    cin.ignore();
-    cout << "Ingrese descripcion del curso: ";
-    cin.getline(_descripcionCurso, 100);
-
-    cout << "Ingrese numero de aula: ";
-    cin >> _numAula;
-
-    cout << "Ingrese cantidad maxima de alumnos: ";
-    cin >> _maxAlumnos;
-
-    cout << "Ingrese costo de matricula: $";
-    cin >> _costoMatricula;
-
-    cout << "Ingrese anio del curso: ";
-    int anio;
-    cin >> anio;
-    _anio = Fecha(1, 1, anio); // Solo nos importa el año
-
-    _cantInscriptos = 0; // Comienza sin inscriptos
-    _estado = true; // Por defecto activo
-
-    cout << "Curso cargado exitosamente.\n";
+    return true;
 }
 
 void Curso::Mostrar() {
-    cout << "\n=== DATOS DEL CURSO ===\n";
     cout << "ID Curso: " << _idCurso << endl;
     cout << "Descripcion: " << _descripcionCurso << endl;
-    cout << "Docente (legajo): " << _legajoDocenteACargo << endl;
-    cout << "Aula: " << _numAula << endl;
-    cout << "Inscriptos: " << _cantInscriptos << "/" << _maxAlumnos << endl;
-    cout << "Anio: " << _anio.getAnio() << endl;
+    cout << "Docente a Cargo (Legajo): " << _legajoDocenteACargo << endl;
+    cout << "Aula Nro: " << _numAula << endl;
+    cout << "Anio: " << _anio << endl;
     cout << "Costo Matricula: $" << _costoMatricula << endl;
-    cout << "Estado: " << (_estado ? "Activo" : "Inactivo") << endl;
-
-    if (tieneCupoDisponible()) {
-        cout << "CUPOS DISPONIBLES: " << (_maxAlumnos - _cantInscriptos) << endl;
-    } else {
-        cout << "CURSO COMPLETO" << endl;
-    }
-}
-
-bool Curso::tieneCupoDisponible() {
-    return _cantInscriptos < _maxAlumnos && _estado;
-}
-
-void Curso::incrementarInscriptos() {
-    if (_cantInscriptos < _maxAlumnos) {
-        _cantInscriptos++;
-    }
-}
-
-void Curso::decrementarInscriptos() {
-    if (_cantInscriptos > 0) {
-        _cantInscriptos--;
-    }
+    cout << "Capacidad Maxima: " << _maxAlumnos << endl;
+    if(_estado) {
+        cout << "Estado : Activo" << endl;
+    }else {cout << "Estado : Inactivo"<< endl;}
 }

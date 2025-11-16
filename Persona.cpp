@@ -118,7 +118,7 @@ bool Persona::Cargar() {
     while (true) {
         cout << "Ingrese DNI (o 0 para cancelar): " << endl;
 
-        if (cin >> dniTemporal) {
+        if (cin >> dniTemporal) { /// este cin >> lo que haces es te devuelve true o false, si ingresaste un numero es true, si ingresaste alguna otra cosa es false
             if (dniTemporal == 0) {
                 return false;
             }
