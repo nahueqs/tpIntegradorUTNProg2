@@ -144,7 +144,7 @@ void ArchivoInscripcion::inscribirAlumno() {
     int idCurso = nuevaInscripcion.getIdCurso();
 
 
-    // 1. Validar que no exista ya una inscripción duplicada
+    //  Validar que no exista ya una inscripción duplicada
     if (buscarInscripcionDuplicada(legajoAlumno, idCurso) >= 0) {
         cout << "*** ERROR: El alumno ya se encuentra inscripto en este curso. ***" << endl;
         return;
@@ -153,7 +153,7 @@ void ArchivoInscripcion::inscribirAlumno() {
     /// aca validamos que exista el alumno con ese legajo y que este activo
     ArchivoAlumnos adminAlumnos("Alumnos.dat");
     int posAlumno = adminAlumnos.buscarPorLegajo(legajoAlumno);
-    if (posAlumno < 0) {
+    if (posAlumno < 0) { //// aca seria si nos retorna -1 o -2 es que no se encontro osea que no existe ese allumno
         cout << "*** ERROR: No se encontro un Alumno con el legajo " << legajoAlumno << ". ***" << endl;
         return;
     }
@@ -218,7 +218,8 @@ void ArchivoInscripcion::inscribirAlumno() {
 
     //// ahora ya con todo validado todo clean aca solo es rellenar
     nuevaInscripcion.setIdInscripcion(generarNuevoIdInscripcion());
-    nuevaInscripcion.setImporteMatricula(costoReal);
+    nuevaInscripcion.setImporteMatricula(costoReal); /// aca seteamos lo que deberia salir la inscripcion
+    nuevaInscripcion.setImportePagado(montoPagado);  /// aca seteamos lo que enrealidad pago de la inscripcion
     nuevaInscripcion.setEstado(true);
 
     cout << "--- RESUMEN DE INSCRIPCION ---" << endl;
@@ -330,7 +331,7 @@ void ArchivoInscripcion::cancelarDeuda() {
         return;
     }
 
-    Inscripcion obj = leerRegistro(pos);
+    Inscripcion obj = leerRegistro(pos); /// aca cargamos la inscripcion si es que ya paso las validaiones de arriba
     cout << "Se encontro la siguiente inscripcion activa:" << endl;
     obj.Mostrar();
     cout << "--------------------------------" << endl;
@@ -344,8 +345,13 @@ void ArchivoInscripcion::cancelarDeuda() {
     cout << "Desea marcar esta matricula como PAGADA? (1 - SI / 0 - NO): " << endl;
     cin >> confirmacion;
 
+    int montoTotalPagado = obj.getImporteMatricula();
+
+
     if (confirmacion == 1) {
+        int montoTotalPagado = obj.getImporteMatricula();
         obj.setMatriculaPaga(true);
+        obj.setImportePagado(montoTotalPagado);
         if (modificarRegistro(obj, pos)) {
             cout << "El pago fue registrado exitosamente." << endl;
         } else {

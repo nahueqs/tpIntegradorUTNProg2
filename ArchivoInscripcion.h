@@ -1,5 +1,5 @@
 #pragma once
-#include "Inscripcion.h";
+#include "Inscripcion.h"
 
 class ArchivoInscripcion {
 private:
