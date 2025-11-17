@@ -1,5 +1,5 @@
 #pragma once
-#include "Inscripcion.h";
+#include "Inscripcion.h"
 
 class ArchivoInscripcion {
 private:
@@ -34,7 +34,7 @@ public:
     void listarPorAlumno();
     void listarActivas(); /// lista todas las inscripciones
     void listarInactivas(); /// lista las bajas
-
+    void listarArrayOrdenadoPorCurso(Inscripcion inscripciones[], int cantidad);
     //// consultas
     void consultarPorId();
     void consultarPorAlumnoYCurso();

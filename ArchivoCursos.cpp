@@ -461,6 +461,8 @@ void ArchivoCursos::listarActivos() {
     locate(43, fila); cout << "AULA";
     locate(50, fila); cout << "DOCENTE (Leg.)";
     locate(67, fila); cout << "MAX. ALUMNOS";
+    locate(83, fila); cout << "$ MAT.";
+    locate(93, fila); cout << "ANIO";
     fila++;
     locate(1, fila); cout << "-----------------------------------------------------------------------------" << endl;
     fila++;
@@ -474,6 +476,8 @@ void ArchivoCursos::listarActivos() {
             locate(43, fila); cout << obj.getNumAula();
             locate(50, fila); cout << obj.getLegajoDocente();
             locate(67, fila); cout << obj.getMaxAlumnos();
+            locate(83, fila); cout << obj.getCostoMatricula();
+            locate(93, fila); cout << obj.getAnio();
 
             fila++;
         }

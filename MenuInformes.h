@@ -6,5 +6,6 @@ void informeRecaudacionAnualCursos();
 void informeRecaudacionporCurso();
 void informeAlumnosInscriptosAnual();
 void informeAlumnoDeudores();
+void informeCursosPorProfesor();
 
 #endif // MENUINFORMES_H_INCLUDED

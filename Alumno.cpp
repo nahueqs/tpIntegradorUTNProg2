@@ -22,22 +22,15 @@ Alumno::Alumno(int d, const char *nom, const char *ape,
     : Persona(d, nom, ape, tel, dir, mail, est, fN),
       _legajoAlumno(legajo)
 {
-
 }
 
-
-
-
 void Alumno::setLegajoAlumno(int legajo) {
-
     _legajoAlumno = legajo;
 }
 
 int Alumno::getLegajoAlumno() const {
     return _legajoAlumno;
 }
-
-
 
 bool Alumno::Cargar() {
 

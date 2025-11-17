@@ -157,8 +157,10 @@ bool Persona::Cargar() {
     }
 
     cout << "--- Cargando Direccion ---" << endl;
-    cin.ignore(10000, '\n');
-    _direccion.Cargar();
+        cin.ignore(10000, '\n');
+        if (!_direccion.Cargar()) {
+            return false;
+        };
 
 
     cout << "Ingrese Email: " << endl;

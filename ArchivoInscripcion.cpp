@@ -208,10 +208,12 @@ void ArchivoInscripcion::inscribirAlumno() {
     /// aca seteamos si pago todo o no
     if (montoPagado >= costoReal) {
         nuevaInscripcion.setMatriculaPaga(true);
+        nuevaInscripcion.setTotalPagado(costoReal);
         cout << "Pago completo registrado." << endl;
 
     } else {
         nuevaInscripcion.setMatriculaPaga(false);
+        nuevaInscripcion.setTotalPagado(montoPagado);
         cout << "Se ha registrado un pago parcial." << endl;
         cout << "Saldo restante: $" << (costoReal - montoPagado) << endl;
     }
@@ -225,6 +227,7 @@ void ArchivoInscripcion::inscribirAlumno() {
     cout << "Alumno: " << alu.getApellido() << ", " << alu.getNombre() << endl;
     cout << "Curso: " << cur.getDescripcion() << endl;
     cout << "Importe de Matricula (Costo Total): $" << costoReal << endl;
+    cout << "Importe abonado: $" << nuevaInscripcion.getTotalPagado() << endl;
     cout << "Estado de Pago: " << (nuevaInscripcion.getMatriculaPaga() ? "PAGADO" : "PENDIENTE") << endl;
     cout << "--------------------------------" << endl;
 
@@ -437,6 +440,7 @@ void ArchivoInscripcion::listarActivas() {
     locate(28, fila); cout << "CURSO (ID)";
     locate(40, fila); cout << "DESCRIPCION CURSO";
     locate(65, fila); cout << "PAGO";
+    locate(70, fila);cout << "$ PAGADO";
     fila++;
     locate(1, fila); cout << "-----------------------------------------------------------------------------" << endl;
     fila++;
@@ -452,7 +456,7 @@ void ArchivoInscripcion::listarActivas() {
             locate(28, fila); cout << obj.getIdCurso();
             locate(40, fila); cout << cur.getDescripcion();
             locate(65, fila); cout << (obj.getMatriculaPaga() ? "SI" : "NO");
-
+            locate(70, fila); cout << (obj.getTotalPagado());
             fila++;
         }
     }
@@ -543,6 +547,7 @@ void ArchivoInscripcion::listarPorCurso() {
     locate(10, fila); cout << "APELLIDO";
     locate(30, fila); cout << "NOMBRE";
     locate(50, fila); cout << "PAGO";
+    locate(55, fila);cout << "$ PAGADO";
     fila++;
     locate(1, fila); cout << "------------------------------------------------------------------" << endl;
     fila++;
@@ -558,7 +563,7 @@ void ArchivoInscripcion::listarPorCurso() {
             locate(10, fila); cout << alu.getApellido();
             locate(30, fila); cout << alu.getNombre();
             locate(50, fila); cout << (obj.getMatriculaPaga() ? "SI" : "NO");
-
+            locate(55, fila); cout << obj.getTotalPagado();
             fila++;
         }
     }
@@ -606,6 +611,8 @@ void ArchivoInscripcion::listarPorAlumno() {
     locate(11, fila); cout << "DESCRIPCION";
     locate(41, fila); cout << "AULA";
     locate(48, fila); cout << "PAGO";
+    locate(55, fila); cout << "$ PAGADO";
+
     fila++;
     locate(1, fila); cout << "------------------------------------------------------------" << endl;
     fila++;
@@ -621,6 +628,7 @@ void ArchivoInscripcion::listarPorAlumno() {
             locate(11, fila); cout << cur.getDescripcion();
             locate(41, fila); cout << cur.getNumAula();
             locate(48, fila); cout << (obj.getMatriculaPaga() ? "SI" : "NO");
+            locate(55, fila); cout << (obj.getTotalPagado());
 
             fila++;
         }
@@ -633,3 +641,38 @@ void ArchivoInscripcion::listarPorAlumno() {
     }
     cout << endl;
 }
+
+void ArchivoInscripcion::listarArrayOrdenadoPorCurso(Inscripcion inscripciones[], int cantidad) {
+
+    if (cantidad < 0) {
+        cout << "No existen inscripciones registradas"<<endl;
+        return;
+    }
+
+    int fila = 3;
+    locate(1, fila);  cout << "CURSO";
+    locate(12, fila); cout << "LEGAJO";
+    locate(22, fila); cout << "$ PAGADO";
+    locate(32, fila); cout << "$ ADEUDADO";
+    fila++;
+    locate(1, fila); cout << "------------------------------------------------------------------" << endl;
+    fila++;
+
+    int i = 0;
+    while (i < cantidad) {
+            float adeudado = (inscripciones[i].getImporteMatricula() - inscripciones[i].getTotalPagado());
+            locate(1, fila);  cout << inscripciones[i].getIdCurso();
+            locate(12, fila); cout << inscripciones[i].getLegajoAlumno();
+            locate(22, fila); cout << inscripciones[i].getTotalPagado();
+            locate(32, fila); cout << adeudado;
+            fila++;
+            locate(1, fila); cout << "------------------------------------------------------------";
+            fila++;
+
+            i++;
+    }
+        cout << endl;
+}
+
+
+

@@ -7,6 +7,8 @@
 using namespace std;
 using namespace rlutil;
 
+
+
 ArchivoPersonal::ArchivoPersonal(const char* nombre) {
     strncpy(_nombre, nombre, 29);
     _nombre[29] = '\0';

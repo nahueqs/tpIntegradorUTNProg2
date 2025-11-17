@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include "Direccion.h"
+using namespace std;
 
 /// constructores
 Direccion::Direccion()
@@ -30,8 +31,10 @@ void Direccion::setCalle(const char *calle) {
 strcpy(_calle, calle);
 }
 
-void Direccion::setNumero(int num) {
+bool Direccion::setNumero(int num) {
+    if  (num < 9999 && num > 0) {
      _numero = num;
+     } else { return false; }
 }
 
 void Direccion::setPiso(const char *piso) {
@@ -75,11 +78,29 @@ const char* Direccion::getCodigoPostal() const {
 }
 
  /// metodos
-void Direccion::Cargar() {
+bool Direccion::Cargar() {
     std::cout << "Calle: ";
     std::cin.getline(_calle, 100);
-    std::cout << "Numero: ";
-    std::cin >> _numero;
+
+    int numero;
+
+    while (true) {
+        std::cout << "Numero: ";
+        if  (std::cin >> numero) {
+            if (setNumero(numero) == true ){
+                break;
+            } else {
+                std::cout << "*** ERROR: Debe ingresar solo numeros menores a  9999. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+
+
+
     std::cin.ignore();
     std::cout << "Piso (o PB): ";
     std::cin.getline(_piso, 10);

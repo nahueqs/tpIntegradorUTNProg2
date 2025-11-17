@@ -10,6 +10,7 @@ Inscripcion::Inscripcion() {
     _legajoAlumno = 0;
     _idCurso = 0;
     _importeMatricula = 0.0f;
+    _totalPagado = 0.0f;
     _matriculaPaga = false;
     _estado = false;
 }
@@ -36,7 +37,9 @@ bool Inscripcion::setIdCurso(int id) {
 void Inscripcion::setFechaInscripcion(Fecha fecha) { _fechaInscripcion = fecha; }
 void Inscripcion::setImporteMatricula(float importe) { _importeMatricula = importe; }
 void Inscripcion::setMatriculaPaga(bool pagada) { _matriculaPaga = pagada; }
+void  Inscripcion::setTotalPagado(float pagado) {_totalPagado = pagado; }
 void Inscripcion::setEstado(bool estado) { _estado = estado; }
+
 
 /// getters
 int Inscripcion::getIdInscripcion() const { return _idInscripcion; }
@@ -45,6 +48,7 @@ int Inscripcion::getIdCurso() const { return _idCurso; }
 Fecha Inscripcion::getFechaInscripcion() const { return _fechaInscripcion; }
 float Inscripcion::getImporteMatricula() const { return _importeMatricula; }
 bool Inscripcion::getMatriculaPaga() const { return _matriculaPaga; }
+float Inscripcion::getTotalPagado() const { return _totalPagado; }
 bool Inscripcion::getEstado() const { return _estado; }
 
 /// cargar mostrar

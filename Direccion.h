@@ -17,7 +17,7 @@ public:
               const char *depto, const char *loc, const char *cp);
 /// stters
     void setCalle(const char *calle);
-    void setNumero(int num);
+    bool setNumero(int num);
     void setPiso(const char *piso);
     void setDepto(const char *depto);
     void setLocalidad(const char *loc);
@@ -32,7 +32,7 @@ public:
     const char* getCodigoPostal() const;
 
 /// metodos
-    void Cargar();
+    bool Cargar();
     void Mostrar();
 };
 

@@ -9,6 +9,7 @@ private:
     int _idCurso;
     Fecha _fechaInscripcion;
     float _importeMatricula;
+    float _totalPagado;
     bool _matriculaPaga;
     bool _estado;
 
@@ -21,6 +22,7 @@ public:
     bool setIdCurso(int id);
     void setFechaInscripcion(Fecha fecha);
     void setImporteMatricula(float importe);
+    void setTotalPagado(float pagado);
     void setMatriculaPaga(bool pagada);
     void setEstado(bool estado);
 
@@ -30,6 +32,7 @@ public:
     int getIdCurso() const;
     Fecha getFechaInscripcion() const;
     float getImporteMatricula() const;
+    float getTotalPagado() const;
     bool getMatriculaPaga() const;
     bool getEstado() const;
 
