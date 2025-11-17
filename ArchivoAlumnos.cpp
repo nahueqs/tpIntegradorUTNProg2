@@ -163,43 +163,48 @@ void ArchivoAlumnos::listarPorApellido() {
         return;
     }
 
-    // Crear array en el stack (más seguro para pocos registros)
-    // Si tienes muchos alumnos, ajusta el tamaño máximo
-    const int MAX_ALUMNOS = 1000;
-    Alumno alumnos[MAX_ALUMNOS];
+    // Leer todos los alumnos en un vector temporal
+    Alumno registro;
+    int indices[1000]; // Guardar orden de índices
     int leidos = 0;
 
-    // Leer registros
-    while (leidos < MAX_ALUMNOS && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+    // Primero leer todo en memoria
+    fseek(p, 0, SEEK_SET);
+    while (leidos < 1000 && fread(&registro, sizeof(Alumno), 1, p) == 1) {
+        indices[leidos] = leidos;
         leidos++;
     }
-    fclose(p);
 
-    if (leidos == 0) {
-        cout << "No se pudieron leer los registros.\n";
-        return;
-    }
-
-    // Ordenamiento por selección (más simple y seguro)
+    // Ordenar los ÍNDICES (no los objetos completos)
     for (int i = 0; i < leidos - 1; i++) {
-        int minIdx = i;
         for (int j = i + 1; j < leidos; j++) {
-            if (strcmp(alumnos[j].getApellido(), alumnos[minIdx].getApellido()) < 0) {
-                minIdx = j;
+            // Leer objetos para comparar
+            Alumno a1, a2;
+            fseek(p, indices[i] * sizeof(Alumno), SEEK_SET);
+            fread(&a1, sizeof(Alumno), 1, p);
+            fseek(p, indices[j] * sizeof(Alumno), SEEK_SET);
+            fread(&a2, sizeof(Alumno), 1, p);
+
+            if (strcmp(a1.getApellido(), a2.getApellido()) > 0) {
+                // Intercambiar índices
+                int temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
             }
         }
-        if (minIdx != i) {
-            Alumno temp = alumnos[i];
-            alumnos[i] = alumnos[minIdx];
-            alumnos[minIdx] = temp;
-        }
     }
 
+    // Mostrar en orden
     cout << "\n========== ALUMNOS ORDENADOS POR APELLIDO ==========\n";
     for (int i = 0; i < leidos; i++) {
-        alumnos[i].Mostrar();
+        Alumno obj;
+        fseek(p, indices[i] * sizeof(Alumno), SEEK_SET);
+        fread(&obj, sizeof(Alumno), 1, p);
+        obj.Mostrar();
         cout << "--------------------------------\n";
     }
+
+    fclose(p);
 }
 
 void ArchivoAlumnos::listarPorDni() {
@@ -215,58 +220,90 @@ void ArchivoAlumnos::listarPorDni() {
         return;
     }
 
-    // Crear array en el stack
-    const int MAX_ALUMNOS = 1000;
-    Alumno alumnos[MAX_ALUMNOS];
+    // Leer todos los alumnos en un vector temporal
+    Alumno registro;
+    int indices[1000]; // Guardar orden de índices
     int leidos = 0;
 
-    // Leer registros
-    while (leidos < MAX_ALUMNOS && fread(&alumnos[leidos], sizeof(Alumno), 1, p) == 1) {
+    // Primero leer todo en memoria
+    fseek(p, 0, SEEK_SET);
+    while (leidos < 1000 && fread(&registro, sizeof(Alumno), 1, p) == 1) {
+        indices[leidos] = leidos;
         leidos++;
     }
-    fclose(p);
 
-    if (leidos == 0) {
-        cout << "No se pudieron leer los registros.\n";
-        return;
-    }
-
-    // Ordenamiento por selección
+    // Ordenar los ÍNDICES por DNI
     for (int i = 0; i < leidos - 1; i++) {
-        int minIdx = i;
         for (int j = i + 1; j < leidos; j++) {
-            if (alumnos[j].getDni() < alumnos[minIdx].getDni()) {
-                minIdx = j;
+            // Leer objetos para comparar
+            Alumno a1, a2;
+            fseek(p, indices[i] * sizeof(Alumno), SEEK_SET);
+            fread(&a1, sizeof(Alumno), 1, p);
+            fseek(p, indices[j] * sizeof(Alumno), SEEK_SET);
+            fread(&a2, sizeof(Alumno), 1, p);
+
+            if (a1.getDni() > a2.getDni()) {
+                // Intercambiar índices
+                int temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
             }
         }
-        if (minIdx != i) {
-            Alumno temp = alumnos[i];
-            alumnos[i] = alumnos[minIdx];
-            alumnos[minIdx] = temp;
-        }
     }
 
+    // Mostrar en orden
     cout << "\n========== ALUMNOS ORDENADOS POR DNI ==========\n";
     for (int i = 0; i < leidos; i++) {
-        alumnos[i].Mostrar();
-        cout << "--------------------------------\n";
-    }
-}
-
-void ArchivoAlumnos::listarSinOrdenar() {
-    FILE *p = fopen(nombre, "rb");
-    if (p == nullptr) {
-        cout << "No hay registros de alumnos.\n";
-        return;
-    }
-    Alumno obj;
-    int contador = 0;
-    cout << "\n========== ALUMNOS (SIN ORDENAR) ==========\n";
-    while (fread(&obj, sizeof(Alumno), 1, p)) {
-        cout << "Registro #" << (++contador) << ":\n";
+        Alumno obj;
+        fseek(p, indices[i] * sizeof(Alumno), SEEK_SET);
+        fread(&obj, sizeof(Alumno), 1, p);
         obj.Mostrar();
         cout << "--------------------------------\n";
     }
+
     fclose(p);
-    cout << "Total de registros leidos: " << contador << endl;
+}
+
+void ArchivoAlumnos::compactarArchivo() { ///método para limpiar registros corruptos
+    int cant = contarRegistros();
+    if (cant == 0) {
+        cout << "No hay registros para compactar.\n";
+        return;
+    }
+
+    // Archivo temporal
+    FILE *pOrig = fopen(nombre, "rb");
+    FILE *pTemp = fopen("Alumnos_temp.dat", "wb");
+
+    if (pOrig == nullptr || pTemp == nullptr) {
+        cout << "Error al abrir archivos.\n";
+        if (pOrig) fclose(pOrig);
+        if (pTemp) fclose(pTemp);
+        return;
+    }
+
+    Alumno obj;
+    int validos = 0;
+    int eliminados = 0;
+
+    while (fread(&obj, sizeof(Alumno), 1, pOrig) == 1) {
+        // Solo copiar registros válidos (con legajo > 0 y activos)
+        if (obj.getLegajo() > 0 && obj.getEstado()) {
+            fwrite(&obj, sizeof(Alumno), 1, pTemp);
+            validos++;
+        } else {
+            eliminados++;
+        }
+    }
+
+    fclose(pOrig);
+    fclose(pTemp);
+
+    // Reemplazar archivo original
+    remove(nombre);
+    rename("Alumnos_temp.dat", nombre);
+
+    cout << "\n===== ARCHIVO COMPACTADO =====\n";
+    cout << "Registros validos: " << validos << "\n";
+    cout << "Registros eliminados: " << eliminados << "\n";
 }

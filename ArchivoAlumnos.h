@@ -32,6 +32,7 @@ public:
     void listarPorApellido();
     void listarPorDni();
     void listarSinOrdenar(); // ← AGREGAR ESTA LÍNEA
+    void compactarArchivo();
 };
 
 #endif

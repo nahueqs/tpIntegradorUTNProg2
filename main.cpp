@@ -67,14 +67,76 @@ void abmlAlumnos() {
                 Alumno obj = arc.leerRegistro(pos);
                 cout << "\nDatos actuales:\n";
                 obj.Mostrar();
-                cout << "\nIngrese los nuevos datos:\n";
-                Alumno nuevoObj;
-                nuevoObj.Cargar();
-                nuevoObj.setLegajo(leg);
-                if (arc.modificarRegistro(nuevoObj, pos))
-                    cout << "\n*** ALUMNO MODIFICADO EXITOSAMENTE ***\n";
-                else
-                    cout << "\n*** ERROR AL MODIFICAR ***\n";
+
+                char confirmar;
+                cout << "\n¿Desea modificar este alumno? (S/N): ";
+                cin >> confirmar;
+
+                if (confirmar == 'S' || confirmar == 's') {
+                    cout << "\nIngrese los nuevos datos:\n";
+
+                    // Cargar SOLO los datos que se pueden cambiar
+                    int dni;
+                    do {
+                        cout << "Ingrese DNI (7-8 digitos): ";
+                        cin >> dni;
+                        if (dni < 1000000 || dni > 99999999) {
+                            cout << "*** ERROR: El DNI debe tener entre 7 y 8 digitos ***\n";
+                        }
+                    } while (dni < 1000000 || dni > 99999999);
+
+                    // Validar que el nuevo DNI no exista (excepto si es el mismo)
+                    if (dni != obj.getDni()) {
+                        int posDni = arc.buscarPorDni(dni);
+                        if (posDni >= 0) {
+                            cout << "\n*** ERROR: Ya existe un alumno con ese DNI ***\n";
+                            system("pause");
+                            break;
+                        }
+                    }
+
+                    obj.setDni(dni);
+
+                    cin.ignore();
+
+                    char nombre[50];
+                    cout << "Ingrese nombre: ";
+                    cin.getline(nombre, 50);
+                    obj.setNombre(nombre);
+
+                    char apellido[50];
+                    cout << "Ingrese apellido: ";
+                    cin.getline(apellido, 50);
+                    obj.setApellido(apellido);
+
+                    int telefono;
+                    cout << "Ingrese telefono: ";
+                    cin >> telefono;
+                    obj.setTelefono(telefono);
+
+                    cin.ignore();
+
+                    char direccion[200];
+                    cout << "Ingrese direccion: ";
+                    cin.getline(direccion, 200);
+                    obj.setDireccion(direccion);
+
+                    char email[50];
+                    cout << "Ingrese email: ";
+                    cin.getline(email, 50);
+                    obj.setEmail(email);
+
+                    // El legajo NO se modifica
+                    obj.setLegajo(leg);
+
+                    if (arc.modificarRegistro(obj, pos)) {
+                        cout << "\n*** ALUMNO MODIFICADO EXITOSAMENTE ***\n";
+                    } else {
+                        cout << "\n*** ERROR AL MODIFICAR ***\n";
+                    }
+                } else {
+                    cout << "\nModificacion cancelada.\n";
+                }
             } else {
                 cout << "\n*** ALUMNO NO ENCONTRADO ***\n";
             }
