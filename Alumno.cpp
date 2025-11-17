@@ -1,5 +1,5 @@
-#include "Alumno.h"
 #include <iostream>
+<<<<<<< HEAD
 #include <cstring>
 
 using namespace std;
@@ -10,10 +10,25 @@ Alumno::Alumno(int l, int d, const char *nom, const char *ape,
                bool est, Fecha fN)
     : Persona(l, d, nom, ape, tel, dir, mail, est, fN) {
     // Llama al constructor de Persona correctamente
+=======
+#include "Alumno.h"
+
+
+using namespace std;
+
+
+
+
+Alumno::Alumno()
+    : Persona(),
+      _legajoAlumno(0)
+{
+
+>>>>>>> origin/alex
 }
 
-// Métodos
 
+<<<<<<< HEAD
 void Alumno::Cargar() {
     cout << "\n=== CARGAR ALUMNO ===\n";
 
@@ -105,9 +120,45 @@ void Alumno::Cargar() {
     setEstado(true); // Por defecto activo
 
     cout << "\nDatos cargados correctamente.\n";
+=======
+Alumno::Alumno(int d, const char *nom, const char *ape,
+               int tel, const Direccion &dir, const char *mail,
+               bool est, Fecha fN,
+               int legajo)
+    : Persona(d, nom, ape, tel, dir, mail, est, fN),
+      _legajoAlumno(legajo)
+{
+
+}
+
+
+
+
+void Alumno::setLegajoAlumno(int legajo) {
+
+    _legajoAlumno = legajo;
+}
+
+int Alumno::getLegajoAlumno() const {
+    return _legajoAlumno;
+}
+
+
+
+bool Alumno::Cargar() {
+
+    if (!Persona::Cargar()) {
+
+        return false;
+    }
+
+    return true;
+>>>>>>> origin/alex
 }
 
 void Alumno::Mostrar() {
-    cout << "\n=== DATOS DEL ALUMNO ===\n";
-    Persona::Mostrar(); // Usa el método de la clase base
+
+    Persona::Mostrar();
+
+    cout << "Legajo: " << getLegajoAlumno() << endl;
 }

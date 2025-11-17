@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../tpIntegradorUTNProg2" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="../tpIntegradorUTNProg2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -38,15 +40,34 @@
 		<Unit filename="ArchivoAlumnos.h" />
 		<Unit filename="ArchivoCursos.cpp" />
 		<Unit filename="ArchivoCursos.h" />
+		<Unit filename="ArchivoInscripcion.cpp" />
+		<Unit filename="ArchivoInscripcion.h" />
+		<Unit filename="ArchivoPersonal.cpp" />
+		<Unit filename="ArchivoPersonal.h" />
 		<Unit filename="Curso.cpp" />
 		<Unit filename="Curso.h" />
+		<Unit filename="Direccion.cpp" />
+		<Unit filename="Direccion.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
-		<Unit filename="Materia.h" />
+		<Unit filename="Inscripcion.cpp" />
+		<Unit filename="Inscripcion.h" />
+		<Unit filename="MenuABML.cpp" />
+		<Unit filename="MenuABML.h" />
+		<Unit filename="MenuAsistencias.cpp" />
+		<Unit filename="MenuAsistencias.h" />
+		<Unit filename="MenuConsultas.cpp" />
+		<Unit filename="MenuConsultas.h" />
+		<Unit filename="MenuInformes.cpp" />
+		<Unit filename="MenuInformes.h" />
+		<Unit filename="MenuListados.cpp" />
+		<Unit filename="MenuListados.h" />
 		<Unit filename="Persona.cpp" />
 		<Unit filename="Persona.h" />
-		<Unit filename="Profesor.h" />
+		<Unit filename="Personal.cpp" />
+		<Unit filename="Personal.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="rlutil.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

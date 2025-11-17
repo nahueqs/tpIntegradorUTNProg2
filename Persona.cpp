@@ -1,33 +1,43 @@
-#include "Persona.h"
-#include <cstring>
 #include <iostream>
+#include <cstring>
+#include <string>
+#include "Persona.h"
+#include "Fecha.h"
+#include "Direccion.h"
 
 using namespace std;
 
-// Constructor CORREGIDO - Ahora sí copia los strings
-Persona::Persona(int l, int d, const char *nom, const char *ape,
-                 int tel, const char *dir, const char *mail,
-                 bool est, Fecha fN) :
-                 _legajo(l), _dni(d), _telefono(tel), _fechaNacimiento(fN), _estado(est) {
-    // Copiar los char* de forma segura
-    strncpy(_nombre, nom, 49);
-    _nombre[49] = '\0';
 
-    strncpy(_apellido, ape, 49);
-    _apellido[49] = '\0';
-
-    strncpy(_direccion, dir, 199);
-    _direccion[199] = '\0';
-
-    strncpy(_email, mail, 49);
-    _email[49] = '\0';
+Persona::Persona()
+    : _dni(0),
+      _telefono(0),
+      _direccion(),
+      _fechaNacimiento(),
+      _estado(true)
+{
+   /// ponemos los nombres como "vacios"
+    strcpy(_nombre, "S/N");
+    strcpy(_apellido, "S/A");
+    strcpy(_email, "S/E");
 }
 
-/// GETTERS
 
-int Persona::getLegajo() const {
-    return _legajo;
+Persona::Persona(int d, const char *nom, const char *ape,
+                 int tel, const Direccion &dir,
+                 const char *mail, bool est, Fecha fN)
+    : _dni(d),
+      _telefono(tel),
+      _direccion(dir),
+      _fechaNacimiento(fN),
+      _estado(est)
+{
+    //aca usamos la funcion del strcpy para copiar los punteros al vector del char
+    strcpy(_nombre, nom);
+    strcpy(_apellido, ape);
+    strcpy(_email, mail);
 }
+
+///getters
 
 int Persona::getDni() const {
     return _dni;
@@ -45,7 +55,7 @@ int Persona::getTelefono() const {
     return _telefono;
 }
 
-const char* Persona::getDireccion() const {
+Direccion Persona::getDireccion() const {
     return _direccion;
 }
 
@@ -57,37 +67,35 @@ bool Persona::getEstado() const {
     return _estado;
 }
 
-Fecha Persona::getFechaNacimiento() const {
+Fecha Persona::getFechaNacimiento(){
     return _fechaNacimiento;
 }
 
-/// SETTERS
+/// setters
 
-void Persona::setLegajo(int valor) {
-    _legajo = valor;
-}
+bool Persona::setDni(int dni) {
 
-void Persona::setDni(int valor) {
-    _dni = valor;
+    if (dni > 100000) {
+        _dni = dni;
+        return true;
+    }
+    return false;
 }
 
 void Persona::setNombre(const char* valor) {
-    strncpy(_nombre, valor, 49);
-    _nombre[49] = '\0';
+    strcpy(_nombre, valor);
 }
 
 void Persona::setApellido(const char* valor) {
-    strncpy(_apellido, valor, 49);
-    _apellido[49] = '\0';
+    strcpy(_apellido, valor);
 }
 
 void Persona::setTelefono(int valor) {
     _telefono = valor;
 }
 
-void Persona::setDireccion(const char* valor) {
-    strncpy(_direccion, valor, 199);
-    _direccion[199] = '\0';
+void Persona::setDireccion(const Direccion &valor) {
+    _direccion = valor;
 }
 
 void Persona::setFechaNacimiento(Fecha fecha) {
@@ -95,63 +103,88 @@ void Persona::setFechaNacimiento(Fecha fecha) {
 }
 
 void Persona::setEmail(const char* valor) {
-    strncpy(_email, valor, 49);
-    _email[49] = '\0';
+    strcpy(_email, valor);
 }
 
 void Persona::setEstado(bool valor) {
     _estado = valor;
 }
 
-/// MÉTODOS - IMPLEMENTADOS
+/// metodos
 
-void Persona::Cargar() {
-    cout << "Ingrese legajo: ";
-    cin >> _legajo;
+bool Persona::Cargar() {
+    int dniTemporal;
 
-    cout << "Ingrese DNI: ";
-    cin >> _dni;
+    while (true) {
+        cout << "Ingrese DNI (o 0 para cancelar): " << endl;
 
-    cin.ignore(); // Limpiar buffer antes de getline
+        if (cin >> dniTemporal) { /// este cin >> lo que haces es te devuelve true o false, si ingresaste un numero es true, si ingresaste alguna otra cosa es false
+            if (dniTemporal == 0) {
+                return false;
+            }
+            if (setDni(dniTemporal) == true) {
+                break;
+            } else {
+                cout << "*** DNI no valido. Debe ser un numero positivo de 6 digitos o mas. ***" << endl;
+            }
+        } else {
+            cout << "*** ERROR: Debe ingresar solo numeros. *** " << endl;;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-    cout << "Ingrese nombre: ";
+
+    cout << "Ingrese Nombre: " << endl;
+    cin.ignore(10000, '\n');
     cin.getline(_nombre, 50);
+    setNombre(_nombre);
 
-    cout << "Ingrese apellido: ";
+    cout << "Ingrese Apellido: " << endl;
     cin.getline(_apellido, 50);
+    setApellido(_apellido);
 
-    cout << "Ingrese telefono: ";
-    cin >> _telefono;
+    while (true) {
+        cout << "Ingrese Telefono: " << endl;
+        if (cin >> _telefono) {
+            break;
+        } else {
 
-    cin.ignore();
+            cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
-    cout << "Ingrese direccion: ";
-    cin.getline(_direccion, 200);
+    cout << "--- Cargando Direccion ---" << endl;
+    cin.ignore(10000, '\n');
+    _direccion.Cargar();
 
-    cout << "Ingrese email: ";
+
+    cout << "Ingrese Email: " << endl;
     cin.getline(_email, 50);
 
-    cout << "Fecha de nacimiento:\n";
-    int dia, mes, anio;
-    cout << "Dia: ";
-    cin >> dia;
-    cout << "Mes: ";
-    cin >> mes;
-    cout << "Anio: ";
-    cin >> anio;
-    _fechaNacimiento = Fecha(dia, mes, anio);
 
-    _estado = true; // Por defecto activo
+    cout << "--- Cargando Fecha de Nacimiento ---" << endl;
+    _fechaNacimiento.Cargar();
+
+    cin.ignore(10000, '\n');
+
+    return true;
 }
 
 void Persona::Mostrar() {
-    cout << "Legajo: " << _legajo << endl;
     cout << "DNI: " << _dni << endl;
     cout << "Nombre: " << _nombre << endl;
     cout << "Apellido: " << _apellido << endl;
     cout << "Telefono: " << _telefono << endl;
-    cout << "Direccion: " << _direccion << endl;
     cout << "Email: " << _email << endl;
-    cout << "Fecha Nacimiento: " << _fechaNacimiento.toString() << endl;
+
+    cout << "--- Direccion ---" << endl;
+    _direccion.Mostrar();
+
+    cout << "Fecha de Nacimiento: ";
+    _fechaNacimiento.Mostrar();
+
     cout << "Estado: " << (_estado ? "Activo" : "Inactivo") << endl;
 }

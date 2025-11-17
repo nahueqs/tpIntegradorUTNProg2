@@ -10,25 +10,35 @@ private:
 public:
     ArchivoCursos(const char *n = "Cursos.dat");
 
-    // MÉTODOS BÁSICOS
+    /// metodos basicos
     int contarRegistros();
     Curso leerRegistro(int pos);
     bool grabarRegistro(Curso obj);
     bool modificarRegistro(Curso obj, int pos);
+    int generarIdCurso();
+    Curso buscarYLeerPorId(int id);
 
     // BÚSQUEDAS
     int buscarPorId(int idCurso);
     int buscarPorAula(int aula);
 
-    // LISTADOS
-    void listar();
-    void listarActivos();
-    void listarPorMaxAlumnos(); // Ordenado por cupo máximo
+    /// alta Baja Modificaciones
+    void darDeAlta();
+    void darDeBaja();
+    void modificar();
+    void reactivar();
 
-    // CONSULTAS ESPECÍFICAS
-    void listarPorDocente(int legajoDocente);
-    void listarConCupoDisponible();
-    void listarPorAnio(int anio);
+    // LISTADOS
+    void listarActivos();
+    void listarInactivos();
+    void listarPorIdCurso();
+    void listarPorMaxAlumnos(); // Ordenado por mayores alumnos
+
+    /// consultas
+    void consularPorLegajoDocente();
+    void consultarPorNumAula();
+    void consultarPorCosto();
+    void consultarPorIdCurso();
 };
 
 #endif // ARCHIVOCURSOS_H_INCLUDED
