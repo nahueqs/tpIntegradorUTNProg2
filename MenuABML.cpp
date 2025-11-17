@@ -51,7 +51,7 @@ void menuABML(){
                 system("pause");
                 break;
             case 4:
-
+                abmlInscripciones();
                 system("pause");
                 break;
             case 5:
