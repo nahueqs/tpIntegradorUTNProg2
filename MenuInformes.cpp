@@ -26,7 +26,7 @@ void menuInformes(){
         cout << "1 - Recaudacion anual de todos los cursos " << endl;
         cout << "2 - Recaudacion por curso" << endl;
         cout << "3 - Informe anual de alumnos inscriptos " << endl;
-        cout << "4 - Informe anual de alumnos deudores por curso" << endl;
+        cout << "4 - Informe de alumnos deudores de todos los cursos" << endl;
         cout << "5 - Informe de cursos a cargo de docente" << endl;
 
         cout << "--------------------------------------" << endl;
@@ -294,16 +294,13 @@ void informeCursosPorProfesor(){
             cout << "No hay inscripciones activas a cargo de ese docente." << endl;
             return;
         } else {
-        cout << "Total de cursos a cargo del docente legajo  "<< legajo << ": " << leidos << endl;
-        cout << "Detalle de cursos a cargo del docente:   "<< endl;
-        int i;
-        for (i=0; i < leidos; i++) {
-            cursosDocente[i].Mostrar();
+            cout << "Total de cursos a cargo del docente legajo  "<< legajo << ": " << leidos << endl;
+            cout << "Detalle de cursos a cargo del docente:   "<< endl;
+            int i;
+            for (i=0; i < leidos; i++) {
+                cursosDocente[i].Mostrar();
+            }
         }
-
-        }
-
-
 }
 
 void informeAlumnoDeudores(){

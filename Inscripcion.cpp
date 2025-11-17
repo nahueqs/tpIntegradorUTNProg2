@@ -36,6 +36,7 @@ bool Inscripcion::setIdCurso(int id) {
 /// settters
 void Inscripcion::setFechaInscripcion(Fecha fecha) { _fechaInscripcion = fecha; }
 void Inscripcion::setImporteMatricula(float importe) { _importeMatricula = importe; }
+void Inscripcion::setImportePagado(float importe) { _importePagado = importe; }
 void Inscripcion::setMatriculaPaga(bool pagada) { _matriculaPaga = pagada; }
 void  Inscripcion::setTotalPagado(float pagado) {_totalPagado = pagado; }
 void Inscripcion::setEstado(bool estado) { _estado = estado; }
@@ -47,6 +48,7 @@ int Inscripcion::getLegajoAlumno() const { return _legajoAlumno; }
 int Inscripcion::getIdCurso() const { return _idCurso; }
 Fecha Inscripcion::getFechaInscripcion() const { return _fechaInscripcion; }
 float Inscripcion::getImporteMatricula() const { return _importeMatricula; }
+float Inscripcion::getImportePagado() const { return _importePagado; }
 bool Inscripcion::getMatriculaPaga() const { return _matriculaPaga; }
 float Inscripcion::getTotalPagado() const { return _totalPagado; }
 bool Inscripcion::getEstado() const { return _estado; }
@@ -111,6 +113,7 @@ void Inscripcion::Mostrar() {
     _fechaInscripcion.Mostrar();
     cout << endl;
     cout << "Importe Matricula: $" << _importeMatricula << endl;
+    cout << "Importe Pagado :  $ " << _importePagado << endl;
     cout << "Matricula Pagada: " << (_matriculaPaga ? "SI" : "NO") << endl;
     cout << "Estado: " << (_estado ? "Activa" : "Inactiva") << endl;
 }
