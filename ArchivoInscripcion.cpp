@@ -221,7 +221,6 @@ void ArchivoInscripcion::inscribirAlumno() {
     //// ahora ya con todo validado todo clean aca solo es rellenar
     nuevaInscripcion.setIdInscripcion(generarNuevoIdInscripcion());
     nuevaInscripcion.setImporteMatricula(costoReal); /// aca seteamos lo que deberia salir la inscripcion
-    nuevaInscripcion.setImportePagado(montoPagado);  /// aca seteamos lo que enrealidad pago de la inscripcion
     nuevaInscripcion.setEstado(true);
 
     cout << "--- RESUMEN DE INSCRIPCION ---" << endl;
@@ -348,13 +347,12 @@ void ArchivoInscripcion::cancelarDeuda() {
     cout << "Desea marcar esta matricula como PAGADA? (1 - SI / 0 - NO): " << endl;
     cin >> confirmacion;
 
-    int montoTotalPagado = obj.getImporteMatricula();
 
 
     if (confirmacion == 1) {
         int montoTotalPagado = obj.getImporteMatricula();
         obj.setMatriculaPaga(true);
-        obj.setImportePagado(montoTotalPagado);
+        obj.setTotalPagado(montoTotalPagado);
         if (modificarRegistro(obj, pos)) {
             cout << "El pago fue registrado exitosamente." << endl;
         } else {
