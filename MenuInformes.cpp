@@ -249,7 +249,7 @@ void informeCursosPorProfesor(){
     // busco  todos los cursos que tengan  al legajodocente a cargo
     int legajo;
         while (true) {
-        cout << "Ingrese un anio: ";
+        cout << "Ingrese el Legajo Docente(ej 5001): ";
         if (cin >> legajo) {
             if (legajo > 0) {
                 break;

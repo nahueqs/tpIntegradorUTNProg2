@@ -149,15 +149,13 @@ bool Persona::Cargar() {
         if (cin >> _telefono) {
             break;
         } else {
-
             cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
             cin.clear();
             cin.ignore(10000, '\n');
         }
     }
 
-    cout << "--- Cargando Direccion ---" << endl;
-        cin.ignore(10000, '\n');
+        cout << "--- Cargando Direccion ---" << endl;
         if (!_direccion.Cargar()) {
             return false;
         };

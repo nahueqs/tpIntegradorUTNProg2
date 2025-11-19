@@ -16,22 +16,21 @@ private:
     bool _estado;
 
 public:
-    // --- Constructores ---
+
     Curso();
     Curso(int id, int legajoDoc, const char* desc, int numAula, int maxAlu, int anio, float costo, bool estado);
 
 
-    // --- Setters (Solo Descripcion fue cambiada) ---
     void setIdCurso(int id);
     void setLegajoDocente(int legajo);
-    void setDescripcion(const char* descripcion); // <-- Vuelve a ser 'void'
+    void setDescripcion(const char* descripcion);
     bool setNumAula(int num);
     bool setMaxAlumnos(int max);
     bool setAnio(int anio);
     bool setCostoMatricula(float costo);
     void setEstado(bool estado);
 
-    // --- Getters ---
+
     int getIdCurso() const;
     int getLegajoDocente() const;
     const char* getDescripcion() const;
@@ -41,7 +40,7 @@ public:
     float getCostoMatricula() const;
     bool getEstado() const;
 
-    // --- Métodos Clave ---
+
     bool Cargar();
     void Mostrar();
 };

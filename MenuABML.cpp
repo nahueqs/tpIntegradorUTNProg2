@@ -4,6 +4,8 @@
 #include "ArchivoPersonal.h"
 #include "ArchivoCursos.h"
 #include "ArchivoInscripcion.h"
+#include "ArchivoAsistencia.h"
+
 using namespace std;
 
 void menuABML(){
@@ -55,6 +57,7 @@ void menuABML(){
                 system("pause");
                 break;
             case 5:
+                abmlAsistencias();
                 system("pause");
                 break;
             case 0:
@@ -313,6 +316,54 @@ void abmlInscripciones(){
 
     }
 }
-void abmlAsistencias(){}
+void abmlAsistencias(){
+
+    ArchivoAsistencia managerAsistencia("Asistencias.dat");
+    int opt;
+    bool bandera = true;
+
+    while (bandera) {
+
+        system("cls");
+        cout << "======================================\n";
+        cout << "              Gestion ABML Alumnos        " << endl;
+        cout << "======================================\n";
+        cout << "1 - TOMAR ASISTENCIA DE UN CURSO" << endl;
+        cout << "2 - MODIFICIAR UNA ASISTENCIA EN ESPECIFICO"<< endl;
+        cout << "0 - Volver " << endl;
+        cin >> opt;
+
+         if (cin.fail()) {
+            cout << "Error: Debe ingresar solo numeros." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("pause");
+            continue;
+        }
+
+
+            switch(opt) {
+                case 1:
+                    system("cls");
+                      managerAsistencia.tomarAsistencia();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                        managerAsistencia.modificarAsistencia();
+                    system("pause");
+                    break;
+                case 0:
+                    bandera = false;
+                    break;
+                default: cout << "opcion no valida"<< endl;
+                    system("pause");
+
+            }
+
+
+    }
+}
 
 

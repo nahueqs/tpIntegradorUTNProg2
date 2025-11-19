@@ -7,90 +7,76 @@ using namespace std;
 Direccion::Direccion()
     : _numero(0)
 {
-    strcpy(_calle, "S/C");
-    strcpy(_piso, "S/P");
-    strcpy(_depto, "S/D");
-    strcpy(_localidad, "S/L");
-    strcpy(_codigoPostal, "S/CP");
-}
 
+    strncpy(_calle, "S/C", 3); _calle[99] = '\0';
+    strncpy(_piso, "S/P", 3); _piso[9] = '\0';
+    strncpy(_depto, "S/D", 3); _depto[9] = '\0';
+    strncpy(_localidad, "S/L", 3); _localidad[49] = '\0';
+    strncpy(_codigoPostal, "S/CP", 4); _codigoPostal[9] = '\0';
+}
 
 Direccion::Direccion(const char *calle, int num, const char *piso,
                      const char *depto, const char *loc, const char *cp)
     : _numero(num)
 {
-    strcpy(_calle, calle);
-    strcpy(_piso, piso);
-    strcpy(_depto, depto);
-    strcpy(_localidad, loc);
-    strcpy(_codigoPostal, cp);
+
+    setCalle(calle);
+    setPiso(piso);
+    setDepto(depto);
+    setLocalidad(loc);
+    setCodigoPostal(cp);
 }
 
-/// setters
+
 void Direccion::setCalle(const char *calle) {
-strcpy(_calle, calle);
+    strncpy(_calle, calle, 99);
+    _calle[99] = '\0';
 }
 
 bool Direccion::setNumero(int num) {
-    if  (num < 9999 && num > 0) {
-     _numero = num;
-     } else { return false; }
+    if (num < 9999 && num > 0) {
+      _numero = num;
+      return true;
+    } else {
+      return false;
+    }
 }
 
 void Direccion::setPiso(const char *piso) {
-    strcpy(_piso, piso);
+    strncpy(_piso, piso, 9); _piso[9] = '\0';
 }
+
 void Direccion::setDepto(const char *depto) {
-strcpy(_depto, depto);
+    strncpy(_depto, depto, 9); _depto[9] = '\0';
 }
 
 void Direccion::setLocalidad(const char *loc) {
-     strcpy(_localidad, loc);
+    strncpy(_localidad, loc, 49); _localidad[49] = '\0';
 }
 
 void Direccion::setCodigoPostal(const char *cp) {
-     strcpy(_codigoPostal, cp);
+    strncpy(_codigoPostal, cp, 9); _codigoPostal[9] = '\0';
 }
 
-/// getters
-const char* Direccion::getCalle() const {
-    return _calle;
-}
 
-int Direccion::getNumero() const {
-    return _numero;
-}
-
-const char* Direccion::getPiso() const {
-    return _piso;
-}
-
-const char* Direccion::getDepto() const {
-    return _depto;
-}
-
-const char* Direccion::getLocalidad() const {
-    return _localidad;
-}
-
-const char* Direccion::getCodigoPostal() const {
-    return _codigoPostal;
-}
-
- /// metodos
 bool Direccion::Cargar() {
+    cin.ignore(10000, '\n');
+
+
+    char tempCalle[100];
     std::cout << "Calle: ";
-    std::cin.getline(_calle, 100);
+    std::cin.getline(tempCalle, 100);
+    setCalle(tempCalle);
+
 
     int numero;
-
     while (true) {
         std::cout << "Numero: ";
-        if  (std::cin >> numero) {
+        if (std::cin >> numero) {
             if (setNumero(numero) == true ){
                 break;
             } else {
-                std::cout << "*** ERROR: Debe ingresar solo numeros menores a  9999. ***" << endl;
+                std::cout << "*** ERROR: Debe ingresar solo numeros menores a 9999. ***" << endl;
             }
         } else {
             cout << "*** ERROR: Debe ingresar solo numeros. ***" << endl;
@@ -99,17 +85,29 @@ bool Direccion::Cargar() {
         }
     }
 
+    std::cin.ignore(10000, '\n');
 
-
-    std::cin.ignore();
+    char tempPiso[10];
     std::cout << "Piso (o PB): ";
-    std::cin.getline(_piso, 10);
+    std::cin.getline(tempPiso, 10);
+    setPiso(tempPiso);
+
+    char tempDepto[10];
     std::cout << "Depto: ";
-    std::cin.getline(_depto, 10);
+    std::cin.getline(tempDepto, 10);
+    setDepto(tempDepto);
+
+    char tempLocalidad[50];
     std::cout << "Localidad: ";
-    std::cin.getline(_localidad, 50);
+    std::cin.getline(tempLocalidad, 50);
+    setLocalidad(tempLocalidad);
+
+    char tempCP[10];
     std::cout << "Codigo Postal: ";
-    std::cin.getline(_codigoPostal, 10);
+    std::cin.getline(tempCP, 10);
+    setCodigoPostal(tempCP);
+
+    return true;
 }
 
 void Direccion::Mostrar() {

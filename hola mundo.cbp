@@ -38,12 +38,16 @@
 		<Unit filename="Alumno.h" />
 		<Unit filename="ArchivoAlumnos.cpp" />
 		<Unit filename="ArchivoAlumnos.h" />
+		<Unit filename="ArchivoAsistencia.cpp" />
+		<Unit filename="ArchivoAsistencia.h" />
 		<Unit filename="ArchivoCursos.cpp" />
 		<Unit filename="ArchivoCursos.h" />
 		<Unit filename="ArchivoInscripcion.cpp" />
 		<Unit filename="ArchivoInscripcion.h" />
 		<Unit filename="ArchivoPersonal.cpp" />
 		<Unit filename="ArchivoPersonal.h" />
+		<Unit filename="Asistencia.cpp" />
+		<Unit filename="Asistencia.h" />
 		<Unit filename="Curso.cpp" />
 		<Unit filename="Curso.h" />
 		<Unit filename="Direccion.cpp" />
@@ -54,8 +58,6 @@
 		<Unit filename="Inscripcion.h" />
 		<Unit filename="MenuABML.cpp" />
 		<Unit filename="MenuABML.h" />
-		<Unit filename="MenuAsistencias.cpp" />
-		<Unit filename="MenuAsistencias.h" />
 		<Unit filename="MenuConsultas.cpp" />
 		<Unit filename="MenuConsultas.h" />
 		<Unit filename="MenuInformes.cpp" />

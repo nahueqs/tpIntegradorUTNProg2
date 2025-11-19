@@ -4,6 +4,7 @@
 #include "ArchivoPersonal.h"
 #include "ArchivoCursos.h"
 #include  "ArchivoInscripcion.h"
+#include "ArchivoAsistencia.h"
 using namespace std;
 
 void menuConsultas(){
@@ -79,6 +80,7 @@ void menuConsultas(){
 
 void consultaAsistencias(){
 
+    ArchivoAsistencia managerAsistencia("Asistencias.dat");
      int opt;
     bool bandera = true;
 
@@ -88,9 +90,9 @@ void consultaAsistencias(){
         cout << "======================================\n";
         cout << "              CONSULTAS ASISTENCIAS    " << endl;
         cout << "======================================\n";
-        cout << "1 - Consultar por Legajo y Curso" << endl;
-        cout << "2 - Consultar por Legajo, Curso y fecha" << endl;
-        cout << "3 - Consultar por Curso y fecha" << endl;
+        cout << "1 - Consultar Faltas de un alumno en un Curso (Legajo-Curso)" << endl;
+        cout << "2 - Consultar la asistencia de un alumno en un dia especifico (legajo-Alumno-fecha)" << endl;
+        cout << "3 - Consultar la asistencia de un curso entero en tal dia(Curso-dia)" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
@@ -107,21 +109,18 @@ void consultaAsistencias(){
             switch(opt) {
                 case 1:
                     system("cls");
-                    /// funcion consultar por legajo y curso
-                    cout << "consultar por legajo y curso" << endl;
+                        managerAsistencia.listarPorAlumnoYCurso();
                     system("pause");
                     break;
                 case 2:
                     system("cls");
-                    /// funcion consultar por legajo curso y fecha
-                    cout << "consultar por legajo, curso y fecha" << endl;
+                        managerAsistencia.listarPorAlumnoCursoYFecha();
                     system("pause");
 
                     break;
                  case 3:
                      system("cls");
-                     /// funcion consultar por curso y fecha
-                    cout << "consultar por curso y fecha" << endl;
+                     managerAsistencia.listarPorCursoYFecha();
                     system("pause");
                     break;
                 case 0:
@@ -288,7 +287,7 @@ void consultaCursos(){
         cout << "1- Consultar por numero de aula" << endl;
         cout << "2 - Consultar por ID docente a cargo" << endl;
         cout << "3 - Consultar Por Costo"<< endl;
-        cout << "3 - Consultar por ID Curso" << endl;
+        cout << "4 - Consultar por ID Curso" << endl;
         cout << "0 - Volver " << endl;
         cin >> opt;
 
