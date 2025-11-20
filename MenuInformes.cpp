@@ -101,7 +101,7 @@ void informeRecaudacionAnualCursos(){
     cin.ignore(10000, '\n');
     }
 
-    cout << "INFORME RECAUDACION ANIO " + anio  <<endl;
+    cout << "INFORME RECAUDACION ANIO " << anio  <<endl;
 
     ArchivoInscripcion inscripciones;
     FILE *p = fopen("Inscripciones.dat", "rb");
@@ -148,7 +148,7 @@ void informeRecaudacionporCurso(){
 
     int idCurso;
     while (true) {
-    cout << "Ingrese el id curso: ";
+    cout << "Ingrese el id curso: " << endl;
     if (cin >> idCurso) {
         if (idCurso > 0) {
             break;
@@ -249,7 +249,7 @@ void informeCursosPorProfesor(){
     // busco  todos los cursos que tengan  al legajodocente a cargo
     int legajo;
         while (true) {
-        cout << "Ingrese el Legajo Docente(ej 5001): ";
+        cout << "Ingrese el Legajo Docente(ej 5001): " << endl;
         if (cin >> legajo) {
             if (legajo > 0) {
                 break;
